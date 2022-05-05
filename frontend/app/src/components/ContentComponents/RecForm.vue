@@ -6,6 +6,9 @@
     :model="formData"
     style="max-width: 400px"
   >
+  <div style="font-size: 15px; font-weight: bold">
+    Step 1: Referring Expression Comprehension (REC)
+  </div>
     <el-form-item label="Referring Expression:">
       <el-contianer direction="horizontal" style="width: 400px">
         <el-input v-model="formData.exp"

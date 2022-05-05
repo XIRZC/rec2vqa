@@ -6,6 +6,9 @@
     :model="formData"
     style="max-width: 400px"
   >
+    <div style="font-size: 15px; font-weight: bold">
+      Step 2: Visual Question Answering (VQA)
+    </div>
     <el-form-item label="Question:">
       <el-contianer direction="horizontal" style="width: 400px">
         <el-input v-model="formData.question"
