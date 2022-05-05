@@ -1,0 +1,7 @@
+frontend/app/node_modules
+backend/backend/__pycache__
+backend/api/__pycache__
+backend/api/migrations
+rest-framework-tutorial/tutorial/__pycache__
+rest-framework-tutorial/snippets/__pycache__
+rest-framework-tutorial/snippets/migrations
