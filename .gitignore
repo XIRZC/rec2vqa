@@ -5,3 +5,5 @@ backend/api/migrations
 rest-framework-tutorial/tutorial/__pycache__
 rest-framework-tutorial/snippets/__pycache__
 rest-framework-tutorial/snippets/migrations
+backend/media/custom
+backend/db.sqlite3

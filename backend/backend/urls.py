@@ -13,17 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import include, url
+from rest_framework.schemas import get_schema_view
+from rest_framework.documentation import include_docs_urls
 from django.contrib import admin
-from django.urls import path
+from django.urls import re_path
+from django.conf import settings
+from django.views.static import serve
 
-from rest_framework import routers
-from django.urls import include
-from api import views
-
-router = routers.DefaultRouter()
-router.register(r'user', views.UserViewSet)
+API_TITLE = 'REC2VQA API'
+API_DESCRIPTION = 'A Web API for requesting rec2vqa project result.'
+schema_view = get_schema_view(title=API_TITLE)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    url(r'^', include('api.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^schema/$', schema_view),
+    url(r'^docs/', include_docs_urls(title=API_TITLE, description=API_DESCRIPTION)),
+    url('admin/', admin.site.urls),
+    re_path(r'media/(?P<path>.*)', serve, {"document_root": settings.MEDIA_ROOT}),
 ]
