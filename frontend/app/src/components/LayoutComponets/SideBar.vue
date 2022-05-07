@@ -11,11 +11,15 @@
           <el-icon><icon-menu /></el-icon>
           <span>Main Operator</span>
         </el-menu-item>
-        <el-menu-item index="2" disabled>
+        <el-menu-item index="2">
           <el-icon><picture-filled /></el-icon>
           <span>Uploaded Pictures</span>
         </el-menu-item>
         <el-menu-item index="3">
+          <el-icon><clock /></el-icon>
+          <span>Request History</span>
+        </el-menu-item>
+        <el-menu-item index="4">
           <el-icon><setting /></el-icon>
           <span>Settings</span>
         </el-menu-item>
@@ -31,6 +35,7 @@ import {
   Location,
   Setting,
   PictureFilled,
+  Clock,
 } from '@element-plus/icons-vue'
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
