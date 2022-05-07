@@ -29,7 +29,7 @@ class REC(models.Model):
 
 class VQA(models.Model):
     question = models.CharField(max_length=255, verbose_name='question')
-    img = models.ForeignKey(IMG, on_delete=models.CASCADE)
+    # img = models.ForeignKey(IMG, on_delete=models.CASCADE)
     # image = models.ImageField(verbose_name='image', upload_to='custom/')
     answer = models.CharField(max_length=255, verbose_name='answer', null=True, blank=True)
     rec = models.ForeignKey(REC, related_name='vqas', on_delete=models.CASCADE)

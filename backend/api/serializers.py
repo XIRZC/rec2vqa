@@ -8,7 +8,7 @@ class VQASerializer(serializers.ModelSerializer):
     # rec = serializers.SlugRelatedField(read_only=True, slug_field='referring_expression')
     class Meta:
         model = VQA
-        fields = ('id', 'question', 'img', 'answer', 'rec')
+        fields = ('id', 'question', 'answer', 'rec')
 
 class RECSerializer(serializers.ModelSerializer):
     vqas = VQASerializer(many=True, read_only=True)
