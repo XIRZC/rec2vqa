@@ -2,10 +2,9 @@
   <el-row class="tac">
     <el-col>
       <el-menu
-        default-active="2"
+        default-active="1"
         class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
+        @select="set_mode"
       >
         <el-menu-item index="1">
           <el-icon><icon-menu /></el-icon>
@@ -29,18 +28,18 @@
 </template>
 
 <script lang="ts" setup>
+import { useStore } from '../../store'
+import { computed } from 'vue'
 import {
-  Document,
   Menu as IconMenu,
-  Location,
   Setting,
   PictureFilled,
   Clock,
 } from '@element-plus/icons-vue'
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
+
+const store = useStore()
+// const mode = computed(() => store.state.mode)
+const set_mode = (key, keyPath) => store.commit('set_mode', {
+  index: key
+})
 </script>

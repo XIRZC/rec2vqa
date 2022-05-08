@@ -11,7 +11,7 @@
   </div>
     <el-form-item label="Referring Expression:">
       <el-contianer direction="horizontal" style="width: 400px">
-        <el-input v-model="formData.exp"
+        <el-input v-model="formData.referring_expression"
          style="max-width: 320px"
          type="textarea"
          autosize
@@ -19,7 +19,7 @@
          maxlength="80"
          show-word-limit
          placeholder="Please input a referring expression : )"  />
-        <el-button type="primary" @click="submitForm(formadataRef)" style="margin-left: 5px"
+        <el-button v-if="!has_rec_posted" type="primary" @click="onSubmit" style="margin-left: 5px"
           >Submit</el-button
         >
       </el-contianer>
@@ -30,25 +30,41 @@
   </el-form>
 </template>
 
+
 <script lang="ts" setup>
+import { useStore } from "../../store";
+import { computed } from "vue";
 import { reactive, ref } from 'vue'
-import type { FormInstance } from 'element-plus'
+const store = useStore()
+const has_rec_posted = computed(() => store.state.has_rec_posted)
+const show_img_id = computed(() => store.state.show_img.id)
+const URL_PREFIX_LOCAL = 'http://127.0.0.1:8000/';
+const URL_PREFIX_REMOTE = 'http://region-11.autodl.com:13142/';
+const URL = URL_PREFIX_LOCAL;
+const axios = require('axios');
 
-const formDataRef = ref<FormInstance>()
-
+// do not use same name with ref
 const formData = reactive({
-  exp: '',
+  referring_expression: '',
   res: '',
+  img: 0,
 })
 
-const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      console.log('submit!', fields)
-    } else {
-      console.log('error submit!', fields)
-    }
-  })
+const onSubmit = () => {
+  formData.img = show_img_id.value
+  console.log('rec submit!', formData)
+  axios.post(URL + 'recs/', formData)
+    .then( (response) => {
+      // console.log(response);
+      store.commit('set_last_rec_post', response)
+    })
+    .catch( (error) => {
+      console.log(error);
+    })
+    .then( () => {
+    })
+  store.commit('set_has_rec_posted', {
+    bin: true,
+  });
 }
 </script>

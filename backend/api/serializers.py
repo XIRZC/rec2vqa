@@ -2,8 +2,6 @@ from unittest.mock import seal
 from api import models
 from rest_framework import serializers
 from api.models import REC, VQA, IMG
-import os
-from django.conf import settings
 class VQASerializer(serializers.ModelSerializer):
     # rec = serializers.SlugRelatedField(read_only=True, slug_field='referring_expression')
     class Meta:

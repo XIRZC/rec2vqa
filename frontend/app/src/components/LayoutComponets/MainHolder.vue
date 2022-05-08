@@ -1,30 +1,52 @@
 <template>
-    <el-container style="padding: 10px 70px">
-      <el-container direction="vertical" style="max-width: 400px; text-align: center">
-        <ImageHolder />
-        <UploadHolder />
+    <el-container direction="horizontal">
+      <el-container style="padding: 10px 70px" v-if="mode === 'Main'">
+        <el-container direction="vertical" style="max-width: 400px; text-align: center">
+          <div>
+            <el-radio-group v-model="choice_radio">
+              <el-radio-button label="Select From PhotoWall" />
+              <el-radio-button label="Upload Only One Photo" />
+            </el-radio-group>
+          </div>
+          <SwitchHolder v-if="choice_radio === 'Select From PhotoWall'" />
+          <UploadHolder v-else />
+          <ImageHolder />
+        </el-container>
+        <el-container direction="vertical" style="max-width: 500px; padding: 5px 30px; height: 420px">
+          <el-scrollbar>
+            <RecForm />
+            <VqaForm v-if="has_rec_posted"/>
+          </el-scrollbar>
+        </el-container>
       </el-container>
-      <el-container direction="vertical" style="max-width: 500px; padding: 5px 30px; height: 420px">
-        <el-scrollbar>
-          <RecForm />
-          <VqaForm />
-        </el-scrollbar>
+      <el-container style="padding: 10px 50px" v-else-if="mode === 'Photo'">
+        <PhotoWall />
+      </el-container>
+      <el-container style="padding: 10px 50px" v-else-if="mode === 'Request'">
+        <RequestHistory />
+      </el-container>
+      <el-container style="padding: 10px 50px" v-else-if="mode === 'Setting'">
+        <SettingPanel />
       </el-container>
     </el-container>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { useStore } from "../../store";
+import { computed } from "vue";
+
 import ImageHolder from "../ContentComponents/ImageHolder.vue";
 import UploadHolder from "../ContentComponents/UploadHolder.vue";
+import SwitchHolder from "../ContentComponents/SwitchHolder.vue";
 import RecForm from "../ContentComponents/RecForm.vue";
 import VqaForm from "../ContentComponents/VqaForm.vue";
+import PhotoWall from "../ContentComponents/PhotoWall.vue";
+import RequestHistory from "../ContentComponents/RequestHistory.vue";
+import SettingPanel from "../ContentComponents/SettingPanel.vue";
 
-export default{
-  components: {
-    ImageHolder,
-    UploadHolder,
-    RecForm,
-    VqaForm,
-  },
-};
+import { ref } from 'vue'
+const choice_radio = ref('Select From PhotoWall')
+const store = useStore()
+const mode = computed(() => store.state.mode)
+const has_rec_posted = computed(() => store.state.has_rec_posted)
 </script>

@@ -1,21 +1,39 @@
 <template>
   <div class="demo-image">
     <div class="block">
-      <!-- <span class="demonstration">{{ fit }}</span> -->
-      <el-image :src="url" :fit="fit" />
+      <el-image :src="show_img_url" fit="cover" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-const fit = "cover";
-const url =
-  "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
+import { useStore } from '../../store'
+import { computed } from 'vue'
+const store = useStore()
+const URL_PREFIX_LOCAL = 'http://127.0.0.1:8000/';
+const URL_PREFIX_REMOTE = 'http://region-11.autodl.com:13142/';
+const URL = URL_PREFIX_LOCAL;
+const axios = require('axios');
+async function getImgs() {
+  try {
+    const response = await axios.get(URL + 'imgs/');
+    const data = response.data
+    console.log('data', data)
+    store.commit('set_show_img', {
+      mode: 'list',
+      list: data,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+getImgs()
+const show_img_url = computed(() => store.state.show_img.url)
 </script>
 
 <style scoped>
 .demo-image .block {
-  padding: 20px 0;
+  padding: 10px 0;
   text-align: center;
   border-right: solid 1px var(--el-border-color);
   display: inline-block;

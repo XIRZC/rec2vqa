@@ -19,6 +19,7 @@
 
         <!-- site main content -->
           <el-main style="height:300px">
+            <!-- <el-button>out: {{mode}}</el-button> -->
             <el-scrollbar>
               <MainHolder />
             </el-scrollbar>
@@ -34,21 +35,11 @@
     </el-container>
 </template>
 
-<script>
-import HeaderBar from "./components/LayoutComponets/HeaderBar.vue"
-import MainHolder from "./components/LayoutComponets/MainHolder.vue"
-import SideBar from "./components/LayoutComponets/SideBar.vue"
-import FooterBar from "./components/LayoutComponets/FooterBar.vue"
-
-export default{
-  name: "App",
-  components: {
-    HeaderBar,
-    SideBar,
-    MainHolder,
-    FooterBar,
-  },
-};
+<script lang="ts" setup>
+import HeaderBar from "./components/LayoutComponets/HeaderBar.vue";
+import MainHolder from "./components/LayoutComponets/MainHolder.vue";
+import SideBar from "./components/LayoutComponets/SideBar.vue";
+import FooterBar from "./components/LayoutComponets/FooterBar.vue";
 </script>
 
 <style>

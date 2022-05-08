@@ -1,7 +1,8 @@
 <template>
   <el-upload
-    action="http://127.0.0.1:8000/imgs/"
+    action=""
     list-type="picture-card"
+    :http-request="handleUpload"
     :on-preview="handlePictureCardPreview"
     :on-remove="handleRemove"
     :file-list="fileList"
@@ -15,18 +16,29 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
-
 import type { UploadProps, UploadUserFile } from 'element-plus'
+
+const URL_PREFIX_LOCAL = 'http://127.0.0.1:8000/'
+const URL_PREFIX_REMOTE = 'http://region-11.autodl.com:13142/'
+const URL = URL_PREFIX_LOCAL
+
 const axios = require('axios').default;
 // Optionally the request above could also be done as
-axios.get('http://127.0.0.1:8000/imgs/')
+var img_list = new Array()
+const fileList = ref<UploadUserFile[]>([])
+axios.get(URL + 'imgs/')
   .then(function (response) {
-    console.log(response);
-    const fileList = ref<UploadUserFile[]>([
-
-    ])
+    const data = response.data
+    img_list = new Array(data.length)
+    for (var i = 0; i<data.length; i++) { 
+      img_list[i] = {
+          "name": data[i].id + '-' + data[i].img.split('/')[5],
+          "url": data[i].img,
+      }
+    }
+    fileList.value = img_list
   })
   .catch(function (error) {
     console.log(error);
@@ -34,23 +46,28 @@ axios.get('http://127.0.0.1:8000/imgs/')
   .then(function () {
     // always executed
   });  
-
-// const fileList = ref<UploadUserFile[]>([
-//   {
-//     name: 'food2.jpeg',
-//     url: '/images/guide.png',
-//   },
-// ])
-
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
-
+const handleUpload = (options) => {
+  console.log(options)
+  axios.post(URL + 'imgs/', {
+    img: options.file
+  })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });  
+}
 const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
   console.log(uploadFile, uploadFiles)
+  const id = uploadFile.name[0]
   // Optionally the request above could also be done as
-  axios.post('http://127.0.0.1:8000/imgs/', {
-      pk: id,
-    })
+  axios.delete(URL + 'imgs/' + id + '/')
     .then(function (response) {
       console.log(response);
     })
