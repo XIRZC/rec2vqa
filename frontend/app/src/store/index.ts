@@ -18,6 +18,8 @@ export interface VQA {
   question: string,
   answer: string,
   rec: number,
+  parent_referring_expression: string,
+  parent_result: string,
 }
 
 export interface REC {
@@ -26,6 +28,8 @@ export interface REC {
   image: string,
   referring_expression: string,
   result: string,
+  parent_referring_expression: string,
+  parent_result: string,
   result_image: string,
   vqas: VQA[];
   chidren: VQA[];
@@ -36,10 +40,8 @@ export interface State {
   mode: string,
   has_rec_posted: boolean,
   show_img: ShowImage,
-  // last_rec_post: REC,
-  last_rec_post_id: number,
+  last_rec_post: REC,
   recs: REC[];
-  active_rec_idx: number,
 }
 
 // define injection key
@@ -57,19 +59,19 @@ export const store = createStore<State>({
       list: [],
       id: 1,
     },
-    // last_rec_post: {
-    //   id: 1,
-    //   img: 1,
-    //   image: '',
-    //   referring_expression: '',
-    //   result: '',
-    //   result_image: '',
-    //   vqas: [],
-    //   chidren: [],
-    // },
-    last_rec_post_id: 1,
+    last_rec_post: {
+      id: 1,
+      img: 1,
+      image: '',
+      referring_expression: '',
+      result: '',
+      parent_referring_expression: '',
+      parent_result: '',
+      result_image: '',
+      vqas: [],
+      chidren: [],
+    },
     recs: [],
-    active_rec_idx: -1,
   },
   getters: {
   },
@@ -87,10 +89,6 @@ export const store = createStore<State>({
     set_has_rec_posted (state, payload) {
       state.has_rec_posted = payload.bin;
       // console.log('has_rec_posted', state.has_rec_posted)
-    },
-    set_active_rec_idx (state, payload) {
-      state.active_rec_idx = payload.idx;
-      console.log('active_rec_idx', state.active_rec_idx)
     },
     set_show_img (state, payload) {
       if ( payload.mode === 'next') {
@@ -113,8 +111,9 @@ export const store = createStore<State>({
       }
       // console.log(state.show_img)
     },
-    set_last_rec_post_id (state, payload) {
-      state.last_rec_post_id = payload.id
+    set_last_rec_post (state, payload) {
+      state.last_rec_post = payload
+      console.log('last_rec_post', state.last_rec_post)
     },
     set_recs (state, payload) {
       store.state.recs = payload

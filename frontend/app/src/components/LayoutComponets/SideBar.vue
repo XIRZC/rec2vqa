@@ -36,10 +36,23 @@ import {
   PictureFilled,
   Clock,
 } from '@element-plus/icons-vue'
+import { useRouter, useRoute } from 'vue-router'
 
+const router = useRouter()
+const route = useRoute()
 const store = useStore()
+
 // const mode = computed(() => store.state.mode)
-const set_mode = (key, keyPath) => store.commit('set_mode', {
-  index: key
-})
+const set_mode = (key, keyPath) => {
+  const idx2mode = {
+    "1": "Main",
+    "2": "Photo",
+    "3": "Request",
+    "4": "Setting",
+  }
+  router.push({ name: 'app', params: { mode: idx2mode[key] }})
+}
+// const set_mode = (key, keyPath) => store.commit('set_mode', {
+//   index: key
+// })
 </script>

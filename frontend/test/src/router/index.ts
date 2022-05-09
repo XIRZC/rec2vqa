@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -15,12 +14,7 @@ const routes: Array<RouteRecordRaw> = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
-  {
-    path: '/app/:mode',
-    name: 'app',
-    component: () => import(/* webpackChunkName: "main_app" */ '../views/AppView.vue')
-  },
+  }
 ]
 
 const router = createRouter({

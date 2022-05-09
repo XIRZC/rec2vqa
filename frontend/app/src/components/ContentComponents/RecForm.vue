@@ -54,9 +54,7 @@ const onSubmit = () => {
   axios.post(URL.value + 'recs/', formData)
     .then( (response) => {
       // console.log(response);
-      store.commit('set_last_rec_post_id', {
-        id: response.id,
-      })
+      store.commit('set_last_rec_post', response)
     })
     .catch( (error) => {
       console.log(error);

@@ -1,6 +1,6 @@
 <template>
     <el-container direction="horizontal">
-      <el-container style="padding: 10px 70px" v-if="mode === 'Main'">
+      <el-container style="padding: 10px 70px" v-if="props.app === 'Main'">
         <el-container direction="vertical" style="max-width: 400px; text-align: center">
           <div>
             <el-radio-group v-model="choice_radio">
@@ -19,13 +19,13 @@
           </el-scrollbar>
         </el-container>
       </el-container>
-      <el-container style="padding: 10px 50px" v-else-if="mode === 'Photo'">
+      <el-container style="padding: 10px 50px" v-else-if="props.app === 'Photo'">
         <PhotoWall />
       </el-container>
-      <el-container style="padding: 10px 20px" v-else-if="mode === 'Request'">
+      <el-container style="padding: 10px 20px" v-else-if="props.app === 'Request'">
         <RequestHistory />
       </el-container>
-      <el-container style="padding: 10px 50px" v-else-if="mode === 'Setting'">
+      <el-container style="padding: 10px 50px" v-else-if="props.app === 'Setting'">
         <SettingPanel />
       </el-container>
     </el-container>
@@ -34,7 +34,6 @@
 <script lang="ts" setup>
 import { useStore } from "../../store";
 import { computed } from "vue";
-
 import ImageHolder from "../ContentComponents/ImageHolder.vue";
 import UploadHolder from "../ContentComponents/UploadHolder.vue";
 import SwitchHolder from "../ContentComponents/SwitchHolder.vue";
@@ -43,8 +42,11 @@ import VqaForm from "../ContentComponents/VqaForm.vue";
 import PhotoWall from "../ContentComponents/PhotoWall.vue";
 import RequestHistory from "../ContentComponents/RequestHistory.vue";
 import SettingPanel from "../ContentComponents/SettingPanel.vue";
-
 import { ref } from 'vue'
+
+const props = defineProps(['app'])
+console.log('props.app', props.app)
+
 const choice_radio = ref('Select From PhotoWall')
 const store = useStore()
 const mode = computed(() => store.state.mode)

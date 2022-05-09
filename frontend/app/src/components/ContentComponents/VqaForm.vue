@@ -35,7 +35,7 @@ import { useStore } from "../../store";
 import { computed } from "vue";
 import { reactive, ref } from 'vue'
 const store = useStore()
-const last_posted_rec_id = computed(() => store.state.last_rec_post_id)
+const last_posted_rec_id = computed(() => store.state.last_rec_post.id)
 const URL = computed(() => store.state.URL_PREFIX)
 const axios = require('axios');
 
