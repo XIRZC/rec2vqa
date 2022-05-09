@@ -22,7 +22,7 @@
       <el-container style="padding: 10px 50px" v-else-if="mode === 'Photo'">
         <PhotoWall />
       </el-container>
-      <el-container style="padding: 10px 50px" v-else-if="mode === 'Request'">
+      <el-container style="padding: 10px 20px" v-else-if="mode === 'Request'">
         <RequestHistory />
       </el-container>
       <el-container style="padding: 10px 50px" v-else-if="mode === 'Setting'">

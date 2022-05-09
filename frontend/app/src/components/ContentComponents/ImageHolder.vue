@@ -10,13 +10,12 @@
 import { useStore } from '../../store'
 import { computed } from 'vue'
 const store = useStore()
-const URL_PREFIX_LOCAL = 'http://127.0.0.1:8000/';
-const URL_PREFIX_REMOTE = 'http://region-11.autodl.com:13142/';
-const URL = URL_PREFIX_LOCAL;
+const URL = computed(() => store.state.URL_PREFIX)
+console.log(URL)
 const axios = require('axios');
 async function getImgs() {
   try {
-    const response = await axios.get(URL + 'imgs/');
+    const response = await axios.get(URL.value + 'imgs/');
     const data = response.data
     console.log('data', data)
     store.commit('set_show_img', {

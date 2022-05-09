@@ -36,11 +36,9 @@ import { useStore } from "../../store";
 import { computed } from "vue";
 import { reactive, ref } from 'vue'
 const store = useStore()
+const URL = computed(() => store.state.URL_PREFIX)
 const has_rec_posted = computed(() => store.state.has_rec_posted)
 const show_img_id = computed(() => store.state.show_img.id)
-const URL_PREFIX_LOCAL = 'http://127.0.0.1:8000/';
-const URL_PREFIX_REMOTE = 'http://region-11.autodl.com:13142/';
-const URL = URL_PREFIX_LOCAL;
 const axios = require('axios');
 
 // do not use same name with ref
@@ -53,10 +51,12 @@ const formData = reactive({
 const onSubmit = () => {
   formData.img = show_img_id.value
   console.log('rec submit!', formData)
-  axios.post(URL + 'recs/', formData)
+  axios.post(URL.value + 'recs/', formData)
     .then( (response) => {
       // console.log(response);
-      store.commit('set_last_rec_post', response)
+      store.commit('set_last_rec_post_id', {
+        id: response.id,
+      })
     })
     .catch( (error) => {
       console.log(error);

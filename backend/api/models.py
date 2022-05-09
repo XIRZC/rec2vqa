@@ -16,7 +16,7 @@ class REC(models.Model):
     # image = models.ImageField(verbose_name='image', upload_to='custom/')
     img = models.ForeignKey(IMG, on_delete=models.CASCADE)
     result = models.CharField(max_length=255, verbose_name='result', null=True, blank=True)
-    result_image = models.ImageField(verbose_name='result_image', null=True, blank=True)
+    result_image = models.CharField(max_length=255, verbose_name='result_image', null=True, blank=True)
 
     def __str__(self):
         return self.referring_expression

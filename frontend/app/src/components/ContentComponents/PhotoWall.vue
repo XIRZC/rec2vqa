@@ -19,16 +19,16 @@
 import { ref, reactive } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import type { UploadProps, UploadUserFile } from 'element-plus'
-
-const URL_PREFIX_LOCAL = 'http://127.0.0.1:8000/'
-const URL_PREFIX_REMOTE = 'http://region-11.autodl.com:13142/'
-const URL = URL_PREFIX_LOCAL
+import { useStore } from '../../store'
+import { computed } from 'vue'
+const store = useStore()
+const URL = computed(() => store.state.URL_PREFIX)
 
 const axios = require('axios').default;
 // Optionally the request above could also be done as
 var img_list = new Array()
 const fileList = ref<UploadUserFile[]>([])
-axios.get(URL + 'imgs/')
+axios.get(URL.value + 'imgs/')
   .then(function (response) {
     const data = response.data
     img_list = new Array(data.length)
@@ -50,7 +50,7 @@ const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
 const handleUpload = (options) => {
   console.log(options)
-  axios.post(URL + 'imgs/', {
+  axios.post(URL.value + 'imgs/', {
     img: options.file
   })
     .then(function (response) {
@@ -67,7 +67,7 @@ const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
   console.log(uploadFile, uploadFiles)
   const id = uploadFile.name[0]
   // Optionally the request above could also be done as
-  axios.delete(URL + 'imgs/' + id + '/')
+  axios.delete(URL.value + 'imgs/' + id + '/')
     .then(function (response) {
       console.log(response);
     })

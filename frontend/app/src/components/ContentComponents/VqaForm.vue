@@ -35,10 +35,8 @@ import { useStore } from "../../store";
 import { computed } from "vue";
 import { reactive, ref } from 'vue'
 const store = useStore()
-const last_posted_rec_id = computed(() => store.state.last_rec_post.id)
-const URL_PREFIX_LOCAL = 'http://127.0.0.1:8000/';
-const URL_PREFIX_REMOTE = 'http://region-11.autodl.com:13142/';
-const URL = URL_PREFIX_LOCAL;
+const last_posted_rec_id = computed(() => store.state.last_rec_post_id)
+const URL = computed(() => store.state.URL_PREFIX)
 const axios = require('axios');
 
 const formData = reactive({
@@ -50,7 +48,7 @@ const formData = reactive({
 const onSubmit = () => {
   formData.rec = last_posted_rec_id.value
   console.log('vqa submit!', formData)
-  axios.post(URL + 'vqas/', formData)
+  axios.post(URL.value + 'vqas/', formData)
     .then( (response) => {
       console.log(response);
     })

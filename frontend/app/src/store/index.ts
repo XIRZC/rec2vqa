@@ -13,18 +13,33 @@ export interface ShowImage {
   id: number
 }
 
+export interface VQA {
+  id: number,
+  question: string,
+  answer: string,
+  rec: number,
+}
+
 export interface REC {
   id: number,
   img: number,
+  image: string,
   referring_expression: string,
   result: string,
+  result_image: string,
+  vqas: VQA[];
+  chidren: VQA[];
 }
 
 export interface State {
+  URL_PREFIX: string,
   mode: string,
   has_rec_posted: boolean,
   show_img: ShowImage,
-  last_rec_post: REC,
+  // last_rec_post: REC,
+  last_rec_post_id: number,
+  recs: REC[];
+  active_rec_idx: number,
 }
 
 // define injection key
@@ -32,6 +47,8 @@ export const key: InjectionKey<Store<State>> = Symbol()
 
 export const store = createStore<State>({
   state: {
+    URL_PREFIX : "http://127.0.0.1:8000/",
+    // URL_PREFIX: 'http://region-11.autodl.com:13142/';
     mode: "Main",  // SideBar menubar set mode, and MainHolder get mode
     has_rec_posted: false,  // MainHolder controller for show vqafrom comp
     show_img: {
@@ -40,12 +57,19 @@ export const store = createStore<State>({
       list: [],
       id: 1,
     },
-    last_rec_post: {
-      id: 1,
-      img: 1,
-      referring_expression: '',
-      result: '',
-    }
+    // last_rec_post: {
+    //   id: 1,
+    //   img: 1,
+    //   image: '',
+    //   referring_expression: '',
+    //   result: '',
+    //   result_image: '',
+    //   vqas: [],
+    //   chidren: [],
+    // },
+    last_rec_post_id: 1,
+    recs: [],
+    active_rec_idx: -1,
   },
   getters: {
   },
@@ -57,12 +81,16 @@ export const store = createStore<State>({
         "3": "Request",
         "4": "Setting",
       }
-      state.mode = idx2mode[payload.index]
+      state.mode = idx2mode[payload.index];
       // console.log('store mode', state.mode)
     },
     set_has_rec_posted (state, payload) {
-      state.has_rec_posted = payload.bin
+      state.has_rec_posted = payload.bin;
       // console.log('has_rec_posted', state.has_rec_posted)
+    },
+    set_active_rec_idx (state, payload) {
+      state.active_rec_idx = payload.idx;
+      console.log('active_rec_idx', state.active_rec_idx)
     },
     set_show_img (state, payload) {
       if ( payload.mode === 'next') {
@@ -85,20 +113,13 @@ export const store = createStore<State>({
       }
       // console.log(state.show_img)
     },
-    set_last_rec_post (state, payload) {
-      const data = payload.data
-      state.last_rec_post = {
-        id: data.id,
-        img: data.img,
-        referring_expression: data.referring_expression,
-        result: data.result,
-      }
-      console.log(state.last_rec_post)
-      // state.last_rec_post.id = payload.data.id
-      // state.last_rec_post.img = payload.data.img
-      // state.last_rec_post.referring_expression = payload.data.referring_expression
-      // state.last_rec_post.result = payload.data.result
-    }
+    set_last_rec_post_id (state, payload) {
+      state.last_rec_post_id = payload.id
+    },
+    set_recs (state, payload) {
+      store.state.recs = payload
+      console.log('recs', store.state.recs)
+    },
   },
   actions: {
   },
