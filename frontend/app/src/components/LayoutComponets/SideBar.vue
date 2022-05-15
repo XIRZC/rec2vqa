@@ -52,7 +52,4 @@ const set_mode = (key, keyPath) => {
   }
   router.push({ name: 'app', params: { mode: idx2mode[key] }})
 }
-// const set_mode = (key, keyPath) => store.commit('set_mode', {
-//   index: key
-// })
 </script>
