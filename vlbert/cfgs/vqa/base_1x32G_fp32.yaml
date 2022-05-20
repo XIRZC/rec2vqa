@@ -1,6 +1,6 @@
 ---
 RNG_SEED: 12345
-OUTPUT_PATH: './output/vl-bert/vqa'
+OUTPUT_PATH: '../vlbert/output/vl-bert/vqa'
 MODULE: ResNetVLBERT
 GPUS: '0'
 LOG_FREQUENT: 100
@@ -14,11 +14,11 @@ SCALES:
 
 DATASET:
   DATASET: vqa
-  ANSWER_VOCAB_FILE: './data/coco/vqa/answers_vqa.txt'
+  ANSWER_VOCAB_FILE: '../vlbert/data/coco/vqa/answers_vqa.txt'
   LABEL_INDEX_IN_BATCH: -1
   APPEND_INDEX: false
-  DATASET_PATH: './data/coco'
-  ROOT_PATH: './'
+  DATASET_PATH: '../vlbert/data/coco'
+  ROOT_PATH: '../vlbert'
   TRAIN_IMAGE_SET: 'train2014+val2014'
   VAL_IMAGE_SET: 'val2014'
   TEST_IMAGE_SET: 'test2015'
@@ -31,7 +31,7 @@ DATASET:
   USE_IMDB: false
 
 NETWORK:
-  PARTIAL_PRETRAIN: "./model/pretrained_model/vl-bert-base-prec.model"
+  PARTIAL_PRETRAIN: "../vlbert/model/pretrained_model/vl-bert-base-prec.model"
   PARTIAL_PRETRAIN_PREFIX_CHANGES:
   - "vlbert.mlm_head.predictions.transform->final_mlp.0"
   - "module.vlbert.mlm_head.predictions.transform->module.final_mlp.0"
@@ -48,7 +48,7 @@ NETWORK:
   - 1.0
   - 1.0
   - 1.0
-  IMAGE_FEAT_PRECOMPUTED: true
+  IMAGE_FEAT_PRECOMPUTED: false
   IMAGE_PRETRAINED: ''
   IMAGE_PRETRAINED_EPOCH: 0
   IMAGE_FROZEN_BACKBONE_STAGES:
@@ -58,7 +58,7 @@ NETWORK:
   IMAGE_FINAL_DIM: 768
   IMAGE_SEMANTIC: false
   OUTPUT_CONV5: false
-  BERT_MODEL_NAME: './model/pretrained_model/bert-base-uncased'
+  BERT_MODEL_NAME: '../vlbert/model/pretrained_model/bert-base-uncased'
   BERT_PRETRAINED: ''
   BERT_PRETRAINED_EPOCH: 0
   BERT_FROZEN: false

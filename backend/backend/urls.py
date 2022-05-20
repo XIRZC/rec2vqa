@@ -26,7 +26,8 @@ API_DESCRIPTION = 'A Web API for requesting rec2vqa project result.'
 schema_view = get_schema_view(title=API_TITLE)
 
 urlpatterns = [
-    url(r'^', include('api.urls')),
+    url(r'^api/', include('api.urls')),
+    url(r'^chat/', include('chat.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^schema/$', schema_view),
     url(r'^docs/', include_docs_urls(title=API_TITLE, description=API_DESCRIPTION)),

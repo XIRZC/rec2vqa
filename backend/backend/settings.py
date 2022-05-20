@@ -25,21 +25,24 @@ SECRET_KEY = 'm7@sb2$haxfq07#k)+a-0+-y%pftwua=gy=i#=^ll7cags7xeb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['region-41.autodl.com']
+HOST = 'http://region-41.autodl.com:12855/'
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',  # added
+    'rest_framework',  # added
+    'channels',  # added
+    'api',  # added
+    'chat',  # added
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',  # added
-    'rest_framework',  # added
-    'api',  # added
 ]
 
 MIDDLEWARE = [
@@ -72,6 +75,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
+ASGI_APPLICATION = 'backend.asgi.application'
 
 
 # Database
@@ -151,3 +155,12 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'x-requested-with',
 )
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

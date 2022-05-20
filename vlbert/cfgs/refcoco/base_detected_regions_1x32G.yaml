@@ -1,6 +1,6 @@
 ---
 RNG_SEED: 12345
-OUTPUT_PATH: './output/vl-bert/refcoco+'
+OUTPUT_PATH: '../vlbert/output/vl-bert/refcoco+'
 MODULE: ResNetVLBERT
 GPUS: '0'
 LOG_FREQUENT: 100
@@ -16,8 +16,8 @@ DATASET:
   DATASET: refcoco+
   LABEL_INDEX_IN_BATCH: -1
   APPEND_INDEX: false
-  DATASET_PATH: './data/coco'
-  ROOT_PATH: './'
+  DATASET_PATH: '../vlbert/data/coco'
+  ROOT_PATH: '../vlbert/'
   TRAIN_IMAGE_SET: 'train'
   VAL_IMAGE_SET: 'val'
   TEST_IMAGE_SET: 'test'
@@ -31,7 +31,7 @@ DATASET:
 
 
 NETWORK:
-  PARTIAL_PRETRAIN: "./model/pretrained_model/vl-bert-base-e2e.model"
+  PARTIAL_PRETRAIN: "../vlbert/model/pretrained_model/vl-bert-base-e2e.model"
   PARTIAL_PRETRAIN_PREFIX_CHANGES:
   - "vlbert.mvrc_head.transform->final_mlp.0"
   - "module.vlbert.mvrc_head.transform->module.final_mlp.0"
@@ -49,7 +49,7 @@ NETWORK:
   - 1.0
   - 1.0
   IMAGE_FEAT_PRECOMPUTED: false
-  IMAGE_PRETRAINED: './model/pretrained_model/resnet101-pt-vgbua'
+  IMAGE_PRETRAINED: '../vlbert/model/pretrained_model/resnet101-pt-vgbua'
   IMAGE_PRETRAINED_EPOCH: 0
   IMAGE_FROZEN_BACKBONE_STAGES:
   - 1
@@ -58,7 +58,7 @@ NETWORK:
   IMAGE_FINAL_DIM: 768
   IMAGE_SEMANTIC: false
   OUTPUT_CONV5: false
-  BERT_MODEL_NAME: './model/pretrained_model/bert-base-uncased'
+  BERT_MODEL_NAME: '../vlbert/model/pretrained_model/bert-base-uncased'
   BERT_PRETRAINED: ''
   BERT_PRETRAINED_EPOCH: 0
   BERT_FROZEN: false

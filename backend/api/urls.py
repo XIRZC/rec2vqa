@@ -12,5 +12,6 @@ router.register(r'imgs', views.IMGViewSet)
 # The API URLs are now determined automatically by the router.
 # Additionally, we include the login URLs for the browsable API.
 urlpatterns = [
-    url(r'^', include(router.urls))
+    url(r'^', include(router.urls)),
+    url(r'^post', views.det_post, name='detection')
 ]
