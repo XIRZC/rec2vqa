@@ -1,5 +1,7 @@
 frontend/app/node_modules
 
+resources
+
 backend/api/migrations
 backend/media/
 backend/db.sqlite3
