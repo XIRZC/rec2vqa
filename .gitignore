@@ -1,15 +1,14 @@
-mmdetection
-MAttNetDemo
-
 frontend/app/node_modules
 
 backend/api/migrations
-backend/media/custom
+backend/media/
 backend/db.sqlite3
 
 vlbert/model
 vlbert/ckpts
 vlbert/data
+vlbert/cache
+vlbert/output
 vlbert/common/lib/roi_pooling/build
 
 __pycache__

@@ -3,7 +3,8 @@
     <el-upload
       ref="upload"
       class="upload-demo"
-      action="https://jsonplaceholder.typicode.com/posts/"
+      action=""
+      :before-upload="handleUpload"
       :limit="1"
       :on-exceed="handleExceed"
       :auto-upload="false"
@@ -19,11 +20,42 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { genFileId } from 'element-plus'
 import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
+import { useStore } from '../../store'
 
 const upload = ref<UploadInstance>()
+const axios = require('axios').default;
+const store = useStore()
+const URL = computed(() => store.state.URL_PREFIX)
+
+const handleUpload = (file) => {
+  let formData = new FormData();
+  formData.append('img', file);
+  const url = URL.value + 'imgs/';
+  console.log('url', url)
+  const config = {
+      headers: { 'content-type': 'multipart/form-data' }
+  }
+  axios.post(url, formData, config)
+    .then((response) => {
+        console.log('response', response);
+        store.commit('set_show_img', {
+            mode: 'upload',
+            data: response.data,
+        });
+        store.commit('set_has_rec_posted', {
+          bin: false,
+        });
+    })
+  .catch(function (error) {
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });  
+}
 
 const handleExceed: UploadProps['onExceed'] = (files) => {
   upload.value!.clearFiles()

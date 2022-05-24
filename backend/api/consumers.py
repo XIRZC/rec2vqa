@@ -18,9 +18,8 @@ class ChatConsumer(WebsocketConsumer):
 
         print("Message recieved from client side and the content is ", text_data)
         socket_id = text_data
-        self.socket_id = self.scope['url_route']['kwargs']['socket_id']
         async_to_sync(self.channel_layer.group_add)(
-            self.socket_id,
+            socket_id,
             self.channel_name
         )
         log_to_terminal(self.socket_id, {"info": "Consumer added to the Channel Group"})

@@ -98,6 +98,7 @@ axios.get(URL.value + 'recs/')
             recs[i].vqas[j].parent_referring_expression = recs[i].referring_expression
             recs[i].vqas[j].parent_result = recs[i].result
             recs[i].vqas[j].image = img_url_map[recs[i].img]
+            recs[i].vqas[j].result_image = recs[i].result_image
           }
           recs[i].parent_referring_expression = recs[i].referring_expression
           recs[i].parent_result = recs[i].result

@@ -13,5 +13,5 @@ router.register(r'imgs', views.IMGViewSet)
 # Additionally, we include the login URLs for the browsable API.
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^post', views.det_post, name='detection')
+    url(r'^socket/', views.socket, name='socket')
 ]

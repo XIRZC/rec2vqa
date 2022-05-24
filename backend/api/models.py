@@ -14,12 +14,12 @@ class IMG(models.Model):
 class REC(models.Model):
     referring_expression = models.CharField(max_length=255, verbose_name='referring_expression', default='')
     img = models.ForeignKey(IMG, on_delete=models.CASCADE)
-    socket_id = models.CharField(max_length=100, verbose_name='socket_id', null=True, blank=True)
+    socket_id = models.CharField(max_length=100, verbose_name='socket_id')
     result = models.CharField(max_length=255, verbose_name='result', null=True, blank=True)
     result_image = models.CharField(max_length=255, verbose_name='result_image', null=True, blank=True)
 
     def __str__(self):
-        return self.referring_expression
+        return str(self.id) + '_' + str(self.referring_expression)
 
     class Meta:
         db_table = 'rec'

@@ -8,7 +8,7 @@
         </el-breadcrumb>
           <div class="demo-image">
             <div class="block">
-              <el-image :src="request.image" fit="cover" />
+              <el-image :src="request.result_image" fit="cover" />
             </div>
           </div>
         </el-container>
@@ -67,7 +67,7 @@ const store = useStore()
 const mode = computed(() => store.state.mode)
 const has_rec_posted = computed(() => store.state.has_rec_posted)
 const request = computed( () => store.state.last_rec_post)
-console.log(request)
+// console.log('last_rec_post', request)
 </script>
 
 

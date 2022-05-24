@@ -11,7 +11,6 @@ import { useStore } from '../../store'
 import { computed } from 'vue'
 const store = useStore()
 const URL = computed(() => store.state.URL_PREFIX)
-console.log(URL)
 const axios = require('axios');
 async function getImgs() {
   try {

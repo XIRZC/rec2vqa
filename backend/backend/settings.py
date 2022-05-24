@@ -25,8 +25,8 @@ SECRET_KEY = 'm7@sb2$haxfq07#k)+a-0+-y%pftwua=gy=i#=^ll7cags7xeb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['region-41.autodl.com']
-HOST = 'http://region-41.autodl.com:12855/'
+ALLOWED_HOSTS = ['region-41.autodl.com', 'region-7.autodl.com', '127.0.0.1']
+HOST = 'http://region-7.autodl.com:28417/'
 
 
 # Application definition

@@ -49,7 +49,7 @@ export const key: InjectionKey<Store<State>> = Symbol()
 
 export const store = createStore<State>({
   state: {
-    URL_PREFIX : "http://127.0.0.1:8000/",
+    URL_PREFIX : "http://region-7.autodl.com:28417/",
     // URL_PREFIX: 'http://region-11.autodl.com:13142/';
     mode: "Main",  // SideBar menubar set mode, and MainHolder get mode
     has_rec_posted: false,  // MainHolder controller for show vqafrom comp
@@ -100,12 +100,20 @@ export const store = createStore<State>({
         state.show_img.list = payload.list;
         // console.log('show_img_list', state.show_img.list)
       }
+      else if ( payload.mode === 'upload' ) {  // upload
+        state.show_img.url = payload.data.img
+        state.show_img.id = payload.data.id
+      }
+      else if ( payload.mode === 'show' ) {  // show
+        state.show_img.url = payload.img
+        console.log('payload.img', payload.img)
+      }
       else {  // previous
         if ( state.show_img.idx > 1 ) {
           state.show_img.idx --;
         }
       }
-      if (state.show_img.list != undefined) {
+      if (state.show_img.list != undefined && payload.mode != 'upload' && payload.mode != 'show') {
         state.show_img.url = state.show_img.list[state.show_img.idx-1].img
         state.show_img.id = state.show_img.list[state.show_img.idx-1].id
       }
