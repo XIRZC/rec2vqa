@@ -1,8 +1,8 @@
 <template>
   <el-containter>
     <el-breadcrumb :separator-icon="ArrowRight" style="margin-bottom: 10px">
-      <el-breadcrumb-item :to="{ name: 'app', params: { mode: 'Request' }}">REC List</el-breadcrumb-item>
-      <el-breadcrumb-item >REC Detail</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'app', params: { mode: 'Request' }}">{{rec_list_text}}</el-breadcrumb-item>
+      <el-breadcrumb-item >{{rec_detail_text}}</el-breadcrumb-item>
     </el-breadcrumb>
     <el-table
       :data="tableData"
@@ -12,24 +12,24 @@
       height="400"
       border
     >
-      <el-table-column prop="id" label="ID" width="80" />
-      <el-table-column prop="referring_expression" label="Referring Expression" />
-      <el-table-column prop="result" label="Result" width="350"/>
-      <el-table-column prop="image" label="Image URL" width="100">
+      <el-table-column prop="id" :label="table_id_text" width="80" />
+      <el-table-column prop="referring_expression" :label="table_re_text" />
+      <el-table-column prop="result" :label="table_res_text" width="350"/>
+      <el-table-column prop="image" :label="table_image_url_text" width="100">
         <template #default="scope">
           <el-link :href="scope.row.image" type="primary">
-            Image Link
+            {{table_image_link_text}}
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="entry" label="VQA Entry" width="120">
+      <el-table-column prop="entry" :label="table_vqa_entry_text" width="120">
         <template #default="scope">
           <el-button 
             v-if="scope.row.vqas == undefined"
             type="text" 
             size="small" 
             @click="detailJump(scope.$index, scope.row)" >
-            VQA Detail
+            {{table_vqa_detail_text}}
           </el-button>
             <!-- v-else-if="scope.row.vqas.length == 0"  -->
           <el-button 
@@ -37,7 +37,7 @@
             type="text" 
             size="small" 
             @click="detailJump(scope.$index, scope.row)" >
-            REC Detail
+            {{rec_detail_text}}
           </el-button>
       </template>
       </el-table-column>
@@ -56,6 +56,16 @@ const route = useRoute()
 
 const store = useStore()
 const URL = computed(() => store.state.URL_PREFIX)
+
+const rec_list_text = computed( () => store.state.locale[store.state.locale.lang].RequestHistory.rec_list )
+const rec_detail_text = computed( () => store.state.locale[store.state.locale.lang].RequestHistory.rec_detail )
+const table_id_text = computed( () => store.state.locale[store.state.locale.lang].RequestHistory.table_id )
+const table_re_text = computed( () => store.state.locale[store.state.locale.lang].RequestHistory.table_re )
+const table_res_text = computed( () => store.state.locale[store.state.locale.lang].RequestHistory.table_res )
+const table_image_url_text = computed( () => store.state.locale[store.state.locale.lang].RequestHistory.table_image_url )
+const table_image_link_text = computed( () => store.state.locale[store.state.locale.lang].RequestHistory.table_image_link )
+const table_vqa_entry_text = computed( () => store.state.locale[store.state.locale.lang].RequestHistory.table_vqa_entry )
+const table_vqa_detail_text = computed( () => store.state.locale[store.state.locale.lang].RequestHistory.table_vqa_detail )
 
 const axios = require('axios');
 

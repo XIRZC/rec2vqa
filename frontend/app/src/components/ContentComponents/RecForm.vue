@@ -7,9 +7,9 @@
     style="max-width: 400px"
   >
   <div style="font-size: 15px; font-weight: bold">
-    Step 1: Referring Expression Comprehension (REC)
+    {{title_text}}
   </div>
-    <el-form-item label="Referring Expression:">
+    <el-form-item :label="exp_text">
       <el-contianer direction="horizontal" style="width: 400px">
         <el-input v-model="formData.referring_expression"
          style="max-width: 320px"
@@ -18,26 +18,26 @@
          clearable
          maxlength="80"
          show-word-limit
-         placeholder="Please input a referring expression : )"  />
-        <el-button v-if="!has_rec_posted" type="primary" @click="rec_dialog_show = true" style="margin-left: 5px"
-          >Submit</el-button
+         :placeholder="placeholder_text"  />
+        <el-button type="primary" @click="rec_dialog_show = true" style="margin-left: 5px"
+          >{{submit_text}}</el-button
         >
       </el-contianer>
     </el-form-item>
-    <el-form-item label="Detection Results:">
+    <el-form-item :label="res_text">
       <el-input v-model="formData.res" disabled />
     </el-form-item>
   </el-form>
-  <el-dialog v-model="rec_dialog_show" title="Note" width="30%" center draggable>
+  <el-dialog v-model="rec_dialog_show" width="30%" center draggable>
     <span
-      >Confirm to submit rec form data?
+      >{{dialog_ensure_text}}
       </span
     >
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="rec_dialog_show = false">Cancel</el-button>
+        <el-button @click="rec_dialog_show = false">{{dialog_cancel_text}}</el-button>
         <el-button type="primary" @click="onSubmit"
-          >Confirm</el-button
+          >{{dialog_confirm_text}}</el-button
         >
       </span>
     </template>
@@ -57,6 +57,16 @@ const store = useStore()
 const URL = computed(() => store.state.URL_PREFIX)
 const has_rec_posted = computed(() => store.state.has_rec_posted)
 const show_img_id = computed(() => store.state.show_img.id)
+
+const title_text = computed( () => store.state.locale[store.state.locale.lang].RecForm.title)
+const exp_text = computed( () => store.state.locale[store.state.locale.lang].RecForm.exp)
+const placeholder_text = computed( () => store.state.locale[store.state.locale.lang].RecForm.placeholder)
+const submit_text = computed( () => store.state.locale[store.state.locale.lang].RecForm.submit)
+const res_text = computed( () => store.state.locale[store.state.locale.lang].RecForm.res)
+const dialog_ensure_text = computed( () => store.state.locale[store.state.locale.lang].RecForm.dialog_ensure)
+const dialog_confirm_text = computed( () => store.state.locale[store.state.locale.lang].RecForm.dialog_confirm)
+const dialog_cancel_text = computed( () => store.state.locale[store.state.locale.lang].RecForm.dialog_cancel)
+
 const axios = require('axios');
 const rec_dialog_show = ref(false)
 

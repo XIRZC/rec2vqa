@@ -1,9 +1,9 @@
 <template>
   <div class="switcher">
     <el-button-group>
-      <el-button @click="previousSlide" type="primary" :icon="ArrowLeft">Previous Slide</el-button>
+      <el-button @click="previousSlide" type="primary" :icon="ArrowLeft">{{previous_text}}</el-button>
       <el-button @click="nextSlide" type="primary">
-        Next Slide<el-icon class="el-icon--right"><ArrowRight /></el-icon>
+        {{next_text}}<el-icon class="el-icon--right"><ArrowRight /></el-icon>
       </el-button>
     </el-button-group>
   </div>
@@ -11,11 +11,14 @@
 
 <script setup lang="ts">
 import { useStore } from '../../store'
+import { computed } from 'vue'
 import {
   ArrowLeft,
   ArrowRight,
 } from '@element-plus/icons-vue';
 const store = useStore()
+const previous_text = computed( () => store.state.locale[store.state.locale.lang].SwitchHolder.previous )
+const next_text = computed( () => store.state.locale[store.state.locale.lang].SwitchHolder.next )
 store.commit('set_show_img', {
     mode: 'list',
 });

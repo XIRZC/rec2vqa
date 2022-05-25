@@ -2,6 +2,82 @@ import { createStore, useStore as baseUseStore, Store } from 'vuex'
 import { InjectionKey } from 'vue'
 
 // define your typings for the store state
+// locale for switch between english and chinese, key by lang, value split by component
+export interface HeaderBar {
+  header_text: string,
+  home_site_name: string,
+  about_site_name: string,
+  app_site_name: string
+}
+export interface SideBar {
+  main: string,
+  photo: string,
+  history: string,
+  setting: string,
+}
+export interface MainHolder {
+  select: string,
+  upload: string,
+}
+export interface SwitchHolder {
+  previous: string,
+  next: string,
+}
+export interface UploadHolder {
+  select: string,
+  upload: string,
+}
+export interface RecForm {
+  title: string,
+  exp: string,
+  placeholder: string,
+  submit: string,
+  res: string,
+  dialog_ensure: string,
+  dialog_confirm: string,
+  dialog_cancel: string,
+}
+export interface VqaForm {
+  title: string,
+  question: string,
+  placeholder: string,
+  submit: string,
+  answer: string,
+  dialog_ensure: string,
+  dialog_confirm: string,
+  dialog_cancel: string,
+}
+export interface RequestHistory {
+  rec_list: string,
+  rec_detail: string,
+  table_id: string,
+  table_re: string,
+  table_res: string,
+  table_image_url: string,
+  table_image_link: string,
+  table_vqa_entry: string,
+  table_vqa_detail: string,
+}
+export interface SettingPanel {
+  lang: string,
+  shuffle: string,
+}
+export interface Components {
+  HeaderBar: HeaderBar,
+  SideBar: SideBar,
+  MainHolder: MainHolder,
+  SwitchHolder: SwitchHolder,
+  UploadHolder: UploadHolder,
+  RecForm: RecForm,
+  VqaForm: VqaForm,
+  RequestHistory: RequestHistory,
+  SettingPanel: SettingPanel,
+}
+export interface Locale {
+  en: Components,
+  cn: Components,
+  lang: string,
+}
 export interface Image {
   id: number,
   img: string,
@@ -36,6 +112,8 @@ export interface REC {
 }
 
 export interface State {
+  shuffule_img_list: boolean,
+  locale: Locale,
   URL_PREFIX: string,
   mode: string,
   has_rec_posted: boolean,
@@ -49,6 +127,132 @@ export const key: InjectionKey<Store<State>> = Symbol()
 
 export const store = createStore<State>({
   state: {
+    shuffule_img_list: false,
+    locale: {
+      lang: 'cn',
+      en: {
+        HeaderBar: {
+          header_text: 'Referring Expression Comprehension Based Visual Question Answering',
+          home_site_name: 'Home',
+          about_site_name: 'About',
+          app_site_name: 'App',
+        },
+        SideBar: {
+          main: 'Main Operator',
+          photo: 'Photo Wall',
+          history: 'Request History',
+          setting: 'Setting',
+        },
+        MainHolder: {
+          select: 'Select From PhotoWall',
+          upload: 'Upload Only One Photo',
+        },
+        SwitchHolder: {
+          previous: 'Previous Slide',
+          next: 'Next Slide',
+        },
+        UploadHolder: {
+          select: 'Select File',
+          upload: 'Upload To Server',
+        },
+        RecForm: {
+          title: 'Step 1: Referring Expression Comprehension (REC)',
+          exp: 'Referring Expression:',
+          placeholder: 'Please input a referring expression : )',
+          submit: 'Submit',
+          res: 'Detection Results:',
+          dialog_ensure: 'Confirm to submit rec form data?',
+          dialog_confirm: 'Confirm',
+          dialog_cancel: 'Cancel',
+        },
+        VqaForm: {
+          title: 'Step 2: Visual Question Answering (VQA)',
+          question: 'Question:',
+          placeholder: 'Please input a question : )',
+          submit: 'Submit',
+          answer: 'Answer:',
+          dialog_ensure: 'Confirm to submit vqa form data?',
+          dialog_confirm: 'Confirm',
+          dialog_cancel: 'Cancel',
+        },
+        RequestHistory: {
+          rec_list: 'REC List',
+          rec_detail: 'REC Detail',
+          table_id: 'ID',
+          table_re: 'Referring Expression',
+          table_res: 'Detection Result',
+          table_image_url: 'Image URL',
+          table_image_link: 'Image Link',
+          table_vqa_entry: 'VQA Entry',
+          table_vqa_detail: 'VQA Detail',
+        },
+        SettingPanel: {
+          lang: 'Language Setting: ',
+          shuffle: 'Shuffle Image List Setting: ',
+        },
+      },
+      cn: {
+        HeaderBar: {
+          header_text: '基于指称表达式所指代物体的视觉问题回答',
+          home_site_name: '主页',
+          about_site_name: '关于',
+          app_site_name: '应用',
+        },
+        SideBar: {
+          main: '操作界面',
+          photo: '图片墙',
+          history: '请求历史',
+          setting: '设置',
+        },
+        MainHolder: {
+          select: '从图片墙中选择',
+          upload: '仅上传一张图片',
+        },
+        SwitchHolder: {
+          previous: '上一张',
+          next: '下一张',
+        },
+        UploadHolder: {
+          select: '选择文件',
+          upload: '上传至服务器',
+        },
+        RecForm: {
+          title: '步骤一：指称表达式理解',
+          exp: '指称表达式：',
+          placeholder: '请输入一个指称表达式',
+          submit: '提交',
+          res: '检测结果：',
+          dialog_ensure: '确认提交指称表达式理解的表达数据吗？',
+          dialog_confirm: '确认',
+          dialog_cancel: '取消',
+        },
+        VqaForm: {
+          title: '步骤二：视觉问题回答',
+          question: '问题：',
+          placeholder: '请输入一个问题',
+          submit: '提交',
+          answer: '答案：',
+          dialog_ensure: '确认提交视觉问题回答的表达数据吗？',
+          dialog_confirm: '确认',
+          dialog_cancel: '取消',
+        },
+        RequestHistory: {
+          rec_list: '指称表达理解列表',
+          rec_detail: '指称表达理解详情',
+          table_id: '编号',
+          table_re: '指称表达式',
+          table_res: '检测结果',
+          table_image_url: '图片链接',
+          table_image_link: '图片链接',
+          table_vqa_entry: '视觉问答详情',
+          table_vqa_detail: '视觉问答详情',
+        },
+        SettingPanel: {
+          lang: '语言设置：',
+          shuffle: '图片列表乱序设置：',
+        },
+      }
+    },
     URL_PREFIX : "http://region-7.autodl.com:28417/",
     // URL_PREFIX: 'http://region-11.autodl.com:13142/';
     mode: "Main",  // SideBar menubar set mode, and MainHolder get mode
@@ -126,6 +330,15 @@ export const store = createStore<State>({
     set_recs (state, payload) {
       store.state.recs = payload
       console.log('recs', store.state.recs)
+    },
+    set_locale_lang (state, payload) {
+      console.log('set locale lang', payload)
+      store.state.locale.lang = payload
+    },
+    set_shuffle_img_list (state, payload) {
+      console.log('set shuffle img list', payload)
+      store.state.shuffule_img_list = payload
+      console.log('setted shuffle img list', store.state.shuffule_img_list)
     },
   },
   actions: {

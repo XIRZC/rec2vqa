@@ -10,10 +10,10 @@
       :auto-upload="false"
     >
       <template #trigger>
-        <el-button type="primary">select file</el-button>
+        <el-button type="primary">{{select_text}}</el-button>
       </template>
       <el-button class="align" type="success" @click="submitUpload">
-        upload to server
+        {{upload_text}}
       </el-button>
     </el-upload>
   </div>
@@ -29,6 +29,8 @@ const upload = ref<UploadInstance>()
 const axios = require('axios').default;
 const store = useStore()
 const URL = computed(() => store.state.URL_PREFIX)
+const select_text = computed ( () => store.state.locale[store.state.locale.lang].UploadHolder.select)
+const upload_text = computed ( () => store.state.locale[store.state.locale.lang].UploadHolder.upload)
 
 const handleUpload = (file) => {
   let formData = new FormData();
