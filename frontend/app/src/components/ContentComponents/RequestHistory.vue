@@ -86,6 +86,9 @@ const detailJump = (index: number, row: REC) => {
   // console.log(index, row)
   router.push({ name: 'app', params: { mode: 'RequestDetail' }})
   console.log('ori_row', row)
+  row.referring_expression = row.referring_expression.replace('Question: ', '')
+  row.result = row.result.replace('Answer: ', '')
+  console.log('replaced_row', row)
 
   store.commit('set_last_rec_post', row)
 }

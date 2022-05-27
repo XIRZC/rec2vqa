@@ -243,13 +243,11 @@ def callback(ch, method, properties, body):
         image_path = str(settings.MEDIA_ROOT / rec.img.img.name)
 
         referring_expression = rec.referring_expression
-            
         replace_list = ['it', 'he', 'she']
-
+        question = body['question']
         for item in replace_list:
-            body['question'] = body['question'].replace(item, referring_expression)
-
-        result = model_forward(image_path, body['question'])
+            question = question.replace(item, referring_expression)
+        result = model_forward(image_path, question)
 
         VQA.objects.create(socket_id=body['socket_id'],
                                     question=body['question'],
