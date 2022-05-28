@@ -50,6 +50,7 @@ import { ref } from 'vue'
 import { useStore } from "../../store";
 import { computed } from "vue";
 import { useRouter, useRoute } from 'vue-router'
+import { ElLoading } from 'element-plus'
 
 const router = useRouter()
 const route = useRoute()
@@ -94,6 +95,12 @@ const detailJump = (index: number, row: REC) => {
 }
 // Optionally the request above could also be done as
 var tableData = ref<REC[]>([])
+
+const loadingInstance = ElLoading.service({
+  lock: true,
+  text: 'Loading...',
+  background: 'rgba(0, 0, 0, 0.1)',
+})
 axios.get(URL.value + 'recs/')
   .then(function (response) {
     const recs = response.data
@@ -119,6 +126,7 @@ axios.get(URL.value + 'recs/')
           recs[i].image = img_url_map[recs[i].img]
         }
         tableData.value = recs
+	loadingInstance.close()
         store.commit('set_recs', recs)
       })
       .catch(function (error){

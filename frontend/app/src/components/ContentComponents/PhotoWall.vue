@@ -21,6 +21,7 @@ import { Plus } from '@element-plus/icons-vue'
 import type { UploadProps, UploadUserFile } from 'element-plus'
 import { useStore } from '../../store'
 import { computed } from 'vue'
+import { ElLoading } from 'element-plus'
 const store = useStore()
 const URL = computed(() => store.state.URL_PREFIX)
 const shuffle_img_list = computed(() => store.state.shuffule_img_list)
@@ -46,6 +47,11 @@ const shuffle = function (array) {
 
   return array;
 }
+const loadingInstance = ElLoading.service({
+  lock: true,
+  text: 'Loading...',
+  background: 'rgba(0, 0, 0, 0.1)',
+})
 axios.get(URL.value + 'imgs/')
   .then(function (response) {
     var data = response.data
@@ -62,6 +68,7 @@ axios.get(URL.value + 'imgs/')
       }
     }
     fileList.value = img_list
+    loadingInstance.close()
   })
   .catch(function (error) {
     console.log(error);
