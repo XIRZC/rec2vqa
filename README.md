@@ -12,31 +12,41 @@ Please refer to ![VL-BERT repository](https://github.com/jackroos/VL-BERT.git) f
 
 #### Frontend
 
-The version of Python, django and its dependencies should be as newer as possible.
+The essential frontend environments are node.js and npm, you must note that your ubuntu server version should later than 20.04 and node.js should later than 12.0, so that you can install npm dependencies correctly.
 
 ### Installation
 
+### System
+
+You need `redis-server` and `rabbitmq-server` to ensure using channel_layer in Django Channels and deploy VLBERT vqa and rec worker, respectively.
+
+```sh
+sudo apt-get install redis
+sudo apt-get install rabbitmq
+```
+
 ### Backend
 
-Just clone the repository backend subdir into your GPU server and deploy by `python manage.py runserver 127.0.0.1:6009` after backend environments prepared.
+Just clone the repository into your GPU server and deploy by `cd rec2vqa/backend && python manage.py runserver 6006` after backend environments prepared.
 
 ### Frontend
 
 You should use below commands to create basic frontend environments:
 
 ```
-apt-get install nodejs
+cd rec2vqa
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get install nodejs
 npm set registry https://registry.npmmirror.com/
-npm install -g @vue/cli
-npm install axios --save
-npm install element-plus --save
+cd frontend/app
+npm install
 ```
 
 ## Technology Stack
 
-- frontend: vue3 + elementplus + typescript (port: 8000, deployed at ALiYun)
+- frontend: vue3 + elementplus + typescript (port: 80, deployed at Nginx using TencentYun)
 
-- backend: django + restframework + corsheader (port: 6006, deployed at AutoDL 1080Ti GPU server)
+- backend: django + restframework + corsheader (port: 6006, deployed at AutoDL Tesla P40 GPU server)
 
 
 ## Project Structure

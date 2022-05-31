@@ -107,12 +107,12 @@ CONF_THRESHOLD = 0.5
 BOXES_ROUND = (10, 100)
 def img2bbox(image_path, conf_threshold, boxes_round):
     # test a single image and show the results
-    im = io.imread(image_path)
-    print('img origin shape', im.shape)
-    assert im.shape[-1] == 3, "only 3-channel images are supported"
+    image = Image.open(image_path).convert('RGB')
+    #print('img origin shape', image.shape)
+    #assert image.shape[-1] == 3, "only 3-channel images are supported"
 
     # convert from RGB to BGR because fcos assumes the BRG input image
-    im = im[..., ::-1].copy()
+    im = io.imread(image_path)[..., ::-1].copy()
 
     print('img BGR shape', im.shape)
     # resize image to have its shorter size == 800
@@ -133,8 +133,12 @@ def img2bbox(image_path, conf_threshold, boxes_round):
     boxes.sort(reverse=True, key=lambda box: box[4])
     n_boxes = []
     for i, box in enumerate(boxes[:min(boxes_round[1], len(boxes))]):
-        if i < boxes_round[0] or box[4] > conf_threshold:
-            n_boxes.append(box[:4])
+        #if i < boxes_round[0] or box[4] > conf_threshold:
+        n_boxes.append(box[:4])
+    draw = ImageDraw.Draw(image)
+    for box in n_boxes:
+        draw.rectangle(box, outline='green', width=3)
+    image.save(image_path[:-4] + '_det.jpg')
     return n_boxes
 
 @torch.no_grad()
@@ -199,7 +203,7 @@ def model_forward(image_path, referring_expression):
     tic = time.time()
     image = ori_image
     draw = ImageDraw.Draw(image)
-    draw.rectangle(pred_boxes[0], outline='red')
+    draw.rectangle(pred_boxes[0], outline='green', width=3)
     image.save(result_image)
     draw_img_time = time.time() - tic
 
