@@ -19,8 +19,8 @@
               class="mb-2"
               active-color="#13ce66"
               inactive-color="#ff4949"
-              active-text="是"
-              inactive-text="否"
+              :active-text="shuffle_yes_text"
+              :inactive-text="shuffle_no_text"
               @change="onShuffleChange"
             />
         </el-form-item>
@@ -36,6 +36,8 @@ const lang = computed( () => store.state.locale.lang )
 const shuffle_img_list = computed ( () => store.state.shuffule_img_list)
 const lang_text = computed( () => store.state.locale[store.state.locale.lang].SettingPanel.lang)
 const shuffle_text = computed( () => store.state.locale[store.state.locale.lang].SettingPanel.shuffle)
+const shuffle_yes_text = computed( () => store.state.locale[store.state.locale.lang].SettingPanel.shuffle_yes)
+const shuffle_no_text = computed( () => store.state.locale[store.state.locale.lang].SettingPanel.shuffle_no)
 
 const onLangChange = function (val) {
     console.log('global lang', val)

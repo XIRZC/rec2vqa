@@ -61,6 +61,8 @@ export interface RequestHistory {
 export interface SettingPanel {
   lang: string,
   shuffle: string,
+  shuffle_yes: string,
+  shuffle_no: string,
 }
 export interface Components {
   HeaderBar: HeaderBar,
@@ -189,6 +191,8 @@ export const store = createStore<State>({
         SettingPanel: {
           lang: 'Language Setting: ',
           shuffle: 'Shuffle Image List Setting: ',
+	  shuffle_yes: 'Yes',
+	  shuffle_no: 'No',
         },
       },
       cn: {
@@ -250,6 +254,8 @@ export const store = createStore<State>({
         SettingPanel: {
           lang: '语言设置：',
           shuffle: '图片列表乱序设置：',
+	  shuffle_yes: '是',
+	  shuffle_no: '否',
         },
       }
     },

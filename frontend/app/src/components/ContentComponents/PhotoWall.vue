@@ -81,7 +81,7 @@ const dialogVisible = ref(false)
 const handleUpload = (file) => {
   let formData = new FormData();
     formData.append('img', file);
-    const url = 'http://127.0.0.1:8000/imgs/';
+    const url = URL.value + 'imgs/';
     const config = {
         headers: { 'content-type': 'multipart/form-data' }
     }
