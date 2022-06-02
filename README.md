@@ -67,5 +67,17 @@ npm install
 │       ├── babel.config.js
 │       ├── tsconfig.json
 │       └── vue.config.js
-└── rest-framework-tutorial
+├── vlbert (VLBERT project root dir)
+│   ├── cfgs (model train/val/test configs)
+│   ├── ckpts (finetuned model dir, include vqa and rec)
+│   ├── common (some common modules required by vlbert including resnet101, fastrcnn)
+│   ├── data (MS COCO train2014/val2014/test2015 images, vqa/rec annotations and precomputed boxes and features)
+│   ├── external (pretrained bert codes developed by huggingface)
+│   ├── model (pretrained vlbert model, bert model and resnet101 model parameters)
+│   ├── pretrain (some packaged functions)
+│   ├── refcoco (vlbert for refcoco codes)
+│   ├── vqa (vlbert for vqa codes)
+│   ├── vcr (vlbert for vcr codes)
+│   ├── viz (vlbert for visulization codes)
+│   └── requirements.txt (origin vlbert environment requirements)
 ```
