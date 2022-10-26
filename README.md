@@ -49,7 +49,7 @@ Docker images:
 - `rabbitmq:latest` (public docker repository)
 - `mrxir/rec2vqa:vue` (build and push by myself at [docker.io/mrxir/rec2vqa:vue](https://hub.docker.com/layers/mrxir/rec2vqa/vue/images/sha256-14d7b5c50991893c232f26fae99b7bfd8e38aa72419a25dfc3687cc3acdb12ff?context=explore))
 - `mrxir/rec2vqa:django` (build and push by myself at [docker.io/mrxir/rec2vqa:django](https://hub.docker.com/layers/mrxir/rec2vqa/django/images/sha256-ee19981d87bd4a4cbf0fe9b7bae808a4f1911f88fa202fb0dbe8658d04b4b504?context=explore))
-- `mrxir/rec2vqa:vlbert` (build and push by myself at [docker.io/mrxir/rec2vqa:vlbert](null_now_coming_soon))
+- `mrxir/rec2vqa:vlbert` (build and push by myself at [docker.io/mrxir/rec2vqa:vlbert](https://hub.docker.com/layers/mrxir/rec2vqa/vlbert/images/sha256-c24900fb82fb451b745d2b44bca3122a4995d13a939ceb0cc8b1203a167db039?context=explore))
 
 Docker services:
 
