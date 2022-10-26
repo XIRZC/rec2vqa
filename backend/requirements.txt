@@ -1,8 +1,0 @@
-django
-django-rest-framework
-django-cors-headers
-pika
-channels
-redis-server
-channels_redis
-easydict

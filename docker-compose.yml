@@ -1,0 +1,90 @@
+version: "2.12"
+
+services:
+
+  rabbitmq:
+    # Use built image by official redis
+    image: "rabbitmq:latest"
+    # redis default port open to 5672 for local network ip address access
+    ports:
+      - "5672:5672"
+    healthcheck:
+      # test: ["CMD", "curl", "-f", "http://10.31.164.163:15692"]
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    # Use built image by official redis
+    image: "redis:7.0.5-alpine3.16"
+    # redis default port open to 6379 for local network ip address access
+    ports:
+      - "6379:6379"
+
+  vue:
+    # Build by yourself after changing `./vue/app/Dockerfile`, or use built image on my dockerhub
+    # build: "./vue/app/"
+    image: "mrxir/rec2vqa:vue"
+    # Use 80 convenient port for vue app access through local network ip
+    ports:
+      - "80:8080"
+    volumes:
+      - type: bind
+        source: ./vue/app
+        target: /work
+
+  django:
+    # Build by yourself after changing `./django/Dockerfile`, or use built image on my dockerhub
+    # build: "./django"
+    image: "mrxir/rec2vqa:django"
+    # Use 8080 default django port for local network ip address access
+    ports:
+      - "8080:8080"
+    volumes:
+      - type: bind
+        source: ./django
+        target: /work
+    depends_on:
+      - "redis"
+
+  vlbert-recworker:
+    # Build by yourself after changing `./vlbert/Dockerfile`, or use built image on my dockerhub
+    # build: "./vlbert/"
+    image: "mrxir/rec2vqa:vlbert"
+    volumes:
+      - type: bind
+        source: ./
+        target: /work
+    # nvidia-docker gpu support for all devices
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    # Run vlbert runtime cuda build installation, and then run rec worker program
+    command: bash -c "cd ./django && python recworker.py"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  vlbert-vqaworker:
+    # Build by yourself after changing `./vlbert/Dockerfile`, or use built image on my dockerhub
+    # build: "./vlbert/"
+    image: "mrxir/rec2vqa:vlbert"
+    volumes:
+      - type: bind
+        source: ./
+        target: /work
+    # nvidia-docker gpu support for all devices
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    # Run vlbert runtime cuda build installation, and then run vqa worker program
+    command: bash -c "cd ./django && python vqaworker.py"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+

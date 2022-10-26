@@ -21,8 +21,8 @@ The essential frontend environments are node.js and npm, you must note that your
 You need `redis-server` and `rabbitmq-server` to ensure using channel_layer in Django Channels and deploy VLBERT vqa and rec worker, respectively.
 
 ```sh
-sudo apt-get install redis
-sudo apt-get install rabbitmq
+sudo apt-get install redis-server
+sudo apt-get install rabbitmq-server
 ```
 
 ### Backend

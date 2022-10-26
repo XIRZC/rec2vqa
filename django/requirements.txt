@@ -1,0 +1,9 @@
+django==3.2
+django-rest-framework
+django-cors-headers
+pika
+easydict
+channels
+channels_redis
+coreapi
+Pillow
