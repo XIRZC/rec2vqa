@@ -14,28 +14,32 @@ We use `Vue3+ElementPlus+Typescript` for frontend user interface developing, and
 
 Here are two ways for getting and deploying frontend docker image used in this repository:
 
-- Run `cd ./vue/app && docker build -t mrxir/rec2vqa:vue .` or just uncomment `build: ./vue/app` line in docker-compose.yml when directly run `docker compose up`
-- Run `docker pull mrxir/rec2vqa:vue` or just directly run `docker compose up`
+- Run `cd ./vue/app && docker build -t mrxir/rec2vqa:vue .` or just uncomment `build: ./vue/app` line in docker-compose.yml when directly run `docker compose up -d`
+- Run `docker pull mrxir/rec2vqa:vue` or just directly run `docker compose up -d`
 
-And, directly run `docker compose up` may be the best option.
+And, directly run `docker compose up -d` may be the best option.
 
 ### Backend
 
 We use `Django+Redis+Rabbitmq` for backend data interface developing, and use [python3 docker image](https://hub.docker.com/_/python) to build this django app environment.
 
-As mentioned in above, you can just directly run `docker compose up`, or build or pull it by yourself.
+As mentioned in above, you can just directly run `docker compose up -d`, or build or pull it by yourself.
 
 ### VLBERT
 
 We use [nvidia-cuda docker image](https://hub.docker.com/r/nvidia/cuda) to build the awful and old environment that vlbert used, which is based on `Ubuntu16.04-Cuda9-Cudnn7-Gcc4.9.3-Pytorch1.1.0-Torchvision0.3.0-Python3.6`
 
-As mentioned in above, you can just directly run `docker compose up`, or build or pull it by yourself.
+As mentioned in above, you can just directly run `docker compose up -d`, or build or pull it by yourself.
 
 > Note: you must refer to [this wiki](https://github.com/NVIDIA/nvidia-docker/wiki/Advanced-topics#default-runtime) for ensuring you can access nvidia gpus if you want to build vlbert docker image by yourself. Otherwise, you will find that your build image cannot correctly run on the compose stage.
 
+### Miscellaneous
+
+In addition to above docker images, there are also some other miscellaneous files to hold, including `./vlbert/docker_build` for vlbert image build requirements(optional) and `./vlbert/(data|ckpts|model)` including vqa and rec finetuned weights, vlbert cached module weights and datasets for down-stream tasks finetuning(optional). Here is [the baidupan link](null_now_coming_soon). After downloading these files, you need to place these files in corresponding path in order to mount these files into docker container workspace correctly during `docker compose up -d`.
+
 ## Deploying
 
-The easiest and best way for deploying this codebase is just running `docke compose up` in repository root directory.
+The easiest and best way for deploying this codebase is just running `docke compose up -d` in repository root directory.
 
 And we have five docker images and six services in docker compose deploying.
 
@@ -43,9 +47,9 @@ Docker images:
 
 - `redis:7.0.5-alpine3.16` (public docker repository)
 - `rabbitmq:latest` (public docker repository)
-- `mrxir/rec2vqa:vue` (build and push by myself)
-- `mrxir/rec2vqa:django` (build and push by myself)
-- `mrxir/rec2vqa:vlbert` (build and push by myself)
+- `mrxir/rec2vqa:vue` (build and push by myself at [docker.io/mrxir/rec2vqa:vue](https://hub.docker.com/layers/mrxir/rec2vqa/vue/images/sha256-14d7b5c50991893c232f26fae99b7bfd8e38aa72419a25dfc3687cc3acdb12ff?context=explore))
+- `mrxir/rec2vqa:django` (build and push by myself at [docker.io/mrxir/rec2vqa:django](https://hub.docker.com/layers/mrxir/rec2vqa/django/images/sha256-ee19981d87bd4a4cbf0fe9b7bae808a4f1911f88fa202fb0dbe8658d04b4b504?context=explore))
+- `mrxir/rec2vqa:vlbert` (build and push by myself at [docker.io/mrxir/rec2vqa:vlbert](null_now_coming_soon))
 
 Docker services:
 

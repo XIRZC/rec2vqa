@@ -7,7 +7,6 @@ django/media/
 django/db.sqlite3
 django/dump.rdb
 
-vlbert/resources
 vlbert/model
 vlbert/ckpts
 vlbert/data
