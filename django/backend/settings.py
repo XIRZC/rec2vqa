@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'rest_framework',  # added
     'channels',  # added
     'api',  # added
-    'chat',  # added
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

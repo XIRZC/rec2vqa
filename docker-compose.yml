@@ -4,7 +4,7 @@ services:
 
   rabbitmq:
     # Use built image by official redis
-    image: "rabbitmq:latest"
+    image: "rabbitmq:3.9.24-alpine"
     # redis default port open to 5672 for local network ip address access
     ports:
       - "5672:5672"
