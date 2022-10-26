@@ -56,6 +56,12 @@ Docker services:
 - `vlbert-recworker` deploy after `rabbitmq` booting finished
 - `vlbert-vqaworker` deploy after `rabbitmq` booting finished
 
+After deploying, you can visit `http://$YOUR_LOCAL_IP/#/app/Main` for vue frontend interface, and `http://$YOUR_LOCAL_IP:8080` for django backend data api. And if you deploy at a server, then replace `YOUR_LOCAL_IP` with `YOUR_REMOTE_IP`.
+
+Here are my local ip url after deploying this app(You can access it if you are a NPUer):
+
+- [vue local ip url](http://10.31.164.163/#/app/Main)
+- [django local ip url](http://10.31.164.163:8080)
 
 ## Project Structure
 
