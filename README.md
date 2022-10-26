@@ -2,82 +2,203 @@
 
 This repository is the official implementation of project "Referring Expression Based Visual Question Answering".
 
-## Prerequisites
+![Overall interface](./pics/overallgui.png)
 
-### Environments
+## Installation
 
-#### Backend
-
-Please refer to ![VL-BERT repository](https://github.com/jackroos/VL-BERT.git) for prepare backend environments.
-
-#### Frontend
-
-The essential frontend environments are node.js and npm, you must note that your ubuntu server version should later than 20.04 and node.js should later than 12.0, so that you can install npm dependencies correctly.
-
-### Installation
-
-### System
-
-You need `redis-server` and `rabbitmq-server` to ensure using channel_layer in Django Channels and deploy VLBERT vqa and rec worker, respectively.
-
-```sh
-sudo apt-get install redis-server
-sudo apt-get install rabbitmq-server
-```
-
-### Backend
-
-Just clone the repository into your GPU server and deploy by `cd rec2vqa/backend && python manage.py runserver 6006` after backend environments prepared.
+We recommand to use docker for installing and deploying this demonstrative vlbert app.
 
 ### Frontend
 
-You should use below commands to create basic frontend environments:
+We use `Vue3+ElementPlus+Typescript` for frontend user interface developing, and use [node docker image](https://hub.docker.com/_/node) to build docker image and deploy this vue app.
 
-```
-cd rec2vqa
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt-get install nodejs
-npm set registry https://registry.npmmirror.com/
-cd frontend/app
-npm install
-```
+Here are two ways for getting and deploying frontend docker image used in this repository:
 
-## Technology Stack
+- Run `cd ./vue/app && docker build -t mrxir/rec2vqa:vue .` or just uncomment `build: ./vue/app` line in docker-compose.yml when directly run `docker compose up`
+- Run `docker pull mrxir/rec2vqa:vue` or just directly run `docker compose up`
 
-- frontend: vue3 + elementplus + typescript (port: 80, deployed at Nginx using TencentYun)
+And, directly run `docker compose up` may be the best option.
 
-- backend: django + restframework + corsheader (port: 6006, deployed at AutoDL Tesla P40 GPU server)
+### Backend
+
+We use `Django+Redis+Rabbitmq` for backend data interface developing, and use [python3 docker image](https://hub.docker.com/_/python) to build this django app environment.
+
+As mentioned in above, you can just directly run `docker compose up`, or build or pull it by yourself.
+
+### VLBERT
+
+We use [nvidia-cuda docker image](https://hub.docker.com/r/nvidia/cuda) to build the awful and old environment that vlbert used, which is based on `Ubuntu16.04-Cuda9-Cudnn7-Gcc4.9.3-Pytorch1.1.0-Torchvision0.3.0-Python3.6`
+
+As mentioned in above, you can just directly run `docker compose up`, or build or pull it by yourself.
+
+> Note: you must refer to [this wiki](https://github.com/NVIDIA/nvidia-docker/wiki/Advanced-topics#default-runtime) for ensuring you can access nvidia gpus if you want to build vlbert docker image by yourself. Otherwise, you will find that your build image cannot correctly run on the compose stage.
+
+## Deploying
+
+The easiest and best way for deploying this codebase is just running `docke compose up` in repository root directory.
+
+And we have five docker images and six services in docker compose deploying.
+
+Docker images:
+
+- `redis:7.0.5-alpine3.16` (public docker repository)
+- `rabbitmq:latest` (public docker repository)
+- `mrxir/rec2vqa:vue` (build and push by myself)
+- `mrxir/rec2vqa:django` (build and push by myself)
+- `mrxir/rec2vqa:vlbert` (build and push by myself)
+
+Docker services:
+
+- `redis` deploy at 5672 open to all local network ips
+- `rabbitmq` deploy at 6732 open to all local network ips
+- `vue` deploy at 80 open to all local network ips
+- `django` deploy at 8080 open to all local network ips
+- `vlbert-recworker` deploy after `rabbitmq` booting finished
+- `vlbert-vqaworker` deploy after `rabbitmq` booting finished
 
 
 ## Project Structure
 
 ```
 .
-├── backend (django project root dir)
-│   ├── api (api app root dir)
-│   ├── backend (project setting dir)
-│   ├── manage.py
-│   └── dp.splite3 (sqlite3 database file)
-├── frontend
-│   └── app
-│       ├── node_modules (installed node_modules)
-│       ├── public (static files)
-│       ├── src (vue app root dir)
-│       ├── package.json
-│       ├── babel.config.js
-│       ├── tsconfig.json
-│       └── vue.config.js
-├── vlbert (VLBERT project root dir)
-│   ├── cfgs (model train/val/test configs)
-│   ├── ckpts (finetuned model dir, include vqa and rec)
-│   ├── common (some common modules required by vlbert including resnet101, fastrcnn)
-│   ├── data (MS COCO train2014/val2014/test2015 images, vqa/rec annotations and precomputed boxes and features)
-│   ├── external (pretrained bert codes developed by huggingface)
-│   ├── model (pretrained vlbert model, bert model and resnet101 model parameters)
-│   ├── pretrain (some packaged functions)
-│   ├── refcoco (vlbert for refcoco codes)
-│   ├── vqa (vlbert for vqa codes)
-│   ├── vcr (vlbert for vcr codes)
-│   ├── viz (vlbert for visulization codes)
-│   └── requirements.txt (origin vlbert environment requirements)
+├── django
+│   ├── api (api app root dir)
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── constants.py
+│   │   ├── consumers.py
+│   │   ├── __init__.py
+│   │   ├── migrations
+│   │   ├── models.py
+│   │   ├── routing.py
+│   │   ├── sender.py
+│   │   ├── serializers.py
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   ├── utils.py
+│   │   └── views.py
+│   ├── backend (project setting dir)
+│   │   ├── asgi.py
+│   │   ├── __init__.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
+│   ├── db.sqlite3 (sqlite3 database file)
+│   ├── Dockerfile
+│   ├── manage.py
+│   ├── media
+│   │   ├── custom
+│   │   └── rec
+│   ├── recworker.py
+│   ├── requirements.txt
+│   └── vqaworker.py
+├── docker-compose.yml
+├── README.md
+├── vlbert
+│   ├── cfgs (model train/val/test configs)
+│   │   ├── pretrain
+│   │   ├── refcoco
+│   │   ├── vcr
+│   │   └── vqa
+│   ├── ckpts (finetuned model dir, include vqa and rec)
+│   │   ├── ref
+│   │   └── vqa
+│   ├── common (some common modules required by vlbert including resnet101, fastrcnn)
+│   │   ├── backbone
+│   │   ├── callbacks
+│   │   ├── fast_rcnn.py
+│   │   ├── __init__.py
+│   │   ├── lib
+│   │   ├── lr_scheduler.py
+│   │   ├── metrics
+│   │   ├── module.py
+│   │   ├── nlp
+│   │   ├── trainer.py
+│   │   ├── utils
+│   │   └── visual_linguistic_bert.py
+│   ├── data (MS COCO train2014/val2014/test2015 images, vqa/rec annotations and precomputed boxes and features)
+│   │   └── coco
+│   ├── docker_build
+│   │   ├── Miniconda3-py37_4.12.0-Linux-x86_64.sh
+│   │   ├── requirements_django.txt
+│   │   ├── requirements_vlbert.txt
+│   │   ├── tensorflow-2.6.2-cp36-cp36m-manylinux2010_x86_64.whl
+│   │   └── torch-1.1.0-cp36-cp36m-linux_x86_64.whl
+│   ├── Dockerfile
+│   ├── external (pretrained bert codes developed by huggingface)
+│   │   └── pytorch_pretrained_bert
+│   ├── figs
+│   │   ├── attention_viz.png
+│   │   └── pretrain.png
+│   ├── LICENSE
+│   ├── model (pretrained vlbert model, bert model and resnet101 model parameters)
+│   │   └── pretrained_model
+│   ├── pretrain (some packaged functions)
+│   │   ├── data
+│   │   ├── function
+│   │   ├── _init_paths.py
+│   │   ├── modules
+│   │   ├── train_end2end.py
+│   │   └── vis_attention_maps.py
+│   ├── README.md
+│   ├── refcoco (vlbert for refcoco codes)
+│   │   ├── data
+│   │   ├── function
+│   │   ├── _init_paths.py
+│   │   ├── modules
+│   │   ├── test.py
+│   │   └── train_end2end.py
+│   ├── requirements.txt
+│   ├── scripts
+│   │   ├── dist_run_multi.sh
+│   │   ├── dist_run_single.sh
+│   │   ├── dist_run_slurm.sh
+│   │   ├── init.sh
+│   │   ├── init_slurm.sh
+│   │   ├── launch.py
+│   │   ├── nondist_run.sh
+│   │   ├── nondist_run_slurm.sh
+│   │   ├── ref_eval_testA.sh
+│   │   ├── ref_eval_testB.sh
+│   │   ├── ref_eval_val.sh
+│   │   ├── ref_finetune.sh
+│   │   ├── vqa_eval.sh
+│   │   └── vqa_finetune.sh
+│   ├── vcr (vlbert for vcr codes)
+│   │   ├── data
+│   │   ├── function
+│   │   ├── _init_paths.py
+│   │   ├── modules
+│   │   ├── test.py
+│   │   ├── train_end2end.py
+│   │   └── val.py
+│   ├── viz (vlbert for visulization codes)
+│   │   ├── bertviz
+│   │   ├── _init_paths.py
+│   │   ├── model_view_vl-bert_coco.ipynb
+│   │   └── VISUALIZATION.md
+│   └── vqa (vlbert for vqa codes)
+│       ├── data
+│       ├── function
+│       ├── _init_paths.py
+│       ├── modules
+│       ├── test.py
+│       └── train_end2end.py
+└── vue
+    └── app
+        ├── babel.config.js
+        ├── Dockerfile
+        ├── node_modules (installed node_modules)
+        ├── package.json
+        ├── package-lock.json
+        ├── public (static files)
+        ├── README.md
+        ├── server
+        ├── src (vue app root dir)
+        ├── tsconfig.json
+        └── vue.config.js
 ```
+
+## References
+
+This repository is developed based mainly on [VLBERT](https://github.com/jackroos/VL-BERT)(for vlbert pytorch model finetuning and inference) and [MAttNet](https://github.com/lichengunc/MAttNet)(for combining redis, rabbitmq and django to asynchronously request model inference).
