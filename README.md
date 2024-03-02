@@ -74,10 +74,9 @@ I deploy on my local network server, and here are urls after deploying this app 
 - [vue frontend url](https://rec2vqafr.mrxir.cloud/#/app/Main)
 - [django backend url](https://rec2vqabk.mrxir.cloud/)
 
-
 ## Demo Video
 
-
+https://github.com/XIRZC/rec2vqa/assets/48874620/dc4d8bfc-ecae-4625-975e-84723b562aab
 
 ## Project Structure
 
