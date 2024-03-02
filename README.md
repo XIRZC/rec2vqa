@@ -42,7 +42,7 @@ As mentioned in above, you can just directly run `docker compose up -d`, or buil
 
 ### Miscellaneous
 
-In addition to above docker images, there are also some other miscellaneous files to hold, including `./vlbert/docker_build` for vlbert image build requirements(optional) and `./vlbert/(data|ckpts|model)` including vqa and rec finetuned weights, vlbert cached module weights and datasets for down-stream tasks finetuning(optional). Here is [the baidupan link](null_now_coming_soon). After downloading these files, you need to place these files in corresponding path in order to mount these files into docker container workspace correctly during `docker compose up -d`.
+In addition to above docker images, there are also some other miscellaneous files to hold, including `./vlbert/docker_build` for vlbert image build requirements(optional) and `./vlbert/(data|ckpts|model)` including vqa and rec finetuned weights, vlbert cached module weights and datasets for down-stream tasks finetuning(optional). Here is [the baidupan link](https://www.alipan.com/s/jNcs6zVEuaq). After downloading these files, you need to place these files in corresponding path in order to mount these files into docker container workspace correctly during `docker compose up -d`.
 
 ## Deploying
 

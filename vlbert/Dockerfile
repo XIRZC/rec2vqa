@@ -21,7 +21,7 @@ ENV PATH /opt/conda/envs/rec2vqa/bin:$PATH
 RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip
 RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 RUN pip install ./torch-1.1.0-cp36-cp36m-linux_x86_64.whl torchvision==0.3.0 Cython
-RUN pip install git+https://ghproxy.com/https://github.com/tianzhi0549/FCOS.git
+RUN pip install git+https://mirror.ghproxy.com/https://github.com/tianzhi0549/FCOS.git
 RUN pip install ./tensorflow-2.6.2-cp36-cp36m-manylinux2010_x86_64.whl tensorboard tensorboardx
 RUN pip install -r ./requirements_vlbert.txt
 RUN pip install -r ./requirements_django.txt
