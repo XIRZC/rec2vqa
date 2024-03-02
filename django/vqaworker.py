@@ -227,8 +227,7 @@ def model_forward(image_path, question):
     }
     return output
 
-connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='10.31.164.163'))
+connection = pika.BlockingConnection()
 channel = connection.channel()
 
 channel.queue_declare(queue='vqa_task_queue', durable=True)

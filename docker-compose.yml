@@ -9,9 +9,8 @@ services:
     ports:
       - "5672:5672"
     healthcheck:
-      # test: ["CMD", "curl", "-f", "http://10.31.164.163:15692"]
       test: rabbitmq-diagnostics -q ping
-      interval: 30s
+      interval: 15s
       timeout: 10s
       retries: 5
 
@@ -24,8 +23,8 @@ services:
 
   vue:
     # Build by yourself after changing `./vue/app/Dockerfile`, or use built image on my dockerhub
-    # build: "./vue/app/"
-    image: "mrxir/rec2vqa:vue"
+    build: "./vue/app/"
+    # image: "mrxir/rec2vqa:vue"
     # Use 80 convenient port for vue app access through local network ip
     ports:
       - "80:8080"
@@ -36,8 +35,8 @@ services:
 
   django:
     # Build by yourself after changing `./django/Dockerfile`, or use built image on my dockerhub
-    # build: "./django"
-    image: "mrxir/rec2vqa:django"
+    build: "./django"
+    # image: "mrxir/rec2vqa:django"
     # Use 8080 default django port for local network ip address access
     ports:
       - "8080:8080"
@@ -87,4 +86,3 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
-

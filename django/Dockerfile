@@ -7,6 +7,8 @@ RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip
 RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 RUN pip install -r requirements.txt
 COPY . .
+RUN python manage.py makemigrations api
+RUN python manage.py migrate
 
 EXPOSE 8080
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]

@@ -25,8 +25,8 @@ SECRET_KEY = 'm7@sb2$haxfq07#k)+a-0+-y%pftwua=gy=i#=^ll7cags7xeb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.31.164.163']
-HOST = 'http://10.31.164.163:8080/'
+ALLOWED_HOSTS = ['192.168.101.26', '10.68.119.223', 'rec2vqabk.mrxir.cloud', '127.0.0.1', 'localhost']
+HOST = 'http://192.168.101.26:8080/'
 
 
 # Application definition
@@ -83,7 +83,7 @@ ASGI_APPLICATION = 'backend.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db' / 'db.sqlite3',
     }
 }
 
@@ -159,7 +159,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('10.31.164.163', 6379)],
+            "hosts": [('192.168.101.26', 6379)],
         },
     },
 }

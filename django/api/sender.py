@@ -8,7 +8,7 @@ import json
 
 def sender_rec(image_path, referring_expression, socket_id):
 
-  connection = pika.BlockingConnection(pika.ConnectionParameters(host='10.31.164.163'))
+  connection = pika.BlockingConnection()
   channel = connection.channel()
   channel.queue_declare(queue='rec_task_queue', durable=True)
 
@@ -30,7 +30,7 @@ def sender_rec(image_path, referring_expression, socket_id):
 
 def sender_vqa(question, rec, socket_id):
 
-  connection = pika.BlockingConnection(pika.ConnectionParameters(host='10.31.164.163'))
+  connection = pika.BlockingConnection()
   channel = connection.channel()
   channel.queue_declare(queue='vqa_task_queue', durable=True)
 
@@ -52,7 +52,7 @@ def sender_vqa(question, rec, socket_id):
 
 def sender_det(image_path, referring_expression, socket_id):
 
-  connection = pika.BlockingConnection(pika.ConnectionParameters(host='10.31.164.163'))
+  connection = pika.BlockingConnection()
   channel = connection.channel()
   channel.queue_declare(queue='det_task_queue', durable=True)
 

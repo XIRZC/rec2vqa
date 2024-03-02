@@ -259,7 +259,7 @@ export const store = createStore<State>({
         },
       }
     },
-    URL_PREFIX : "http://10.31.164.163:8080/",
+    URL_PREFIX : "https://rec2vqabk.mrxir.cloud/",
     // URL_PREFIX: 'http://region-11.autodl.com:13142/';
     mode: "Main",  // SideBar menubar set mode, and MainHolder get mode
     has_rec_posted: false,  // MainHolder controller for show vqafrom comp

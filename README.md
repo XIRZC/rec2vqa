@@ -1,10 +1,17 @@
 # Referring Expression Based Visual Question Answering
 
-This repository is the official implementation of project "Referring Expression Based Visual Question Answering".
+<div align="center">
+  <img src="./assets/logo.png" width="90%" alt="Logo">
+</div>
 
-![Overall interface](./pics/overallgui.png)
+This project aims at combining the two most prevalent vision-langauge tasks, first referring expression comprenhension(REC) and then visual question answering(VQA), short for REC2VQA. I finetuned VLBERT on VQAv2 and RefCOCO first to get two independent checkpoints, and then developed a demonstration webui to show this new two-stage task based on vue and django. To optimize the large model loading time, I leveraged Redis and RabbitMQ to asynchronously request large model inference after loading the large model in advance.
 
-## Installation
+<div align="center">
+  <img src="./assets/sys_arch.png" width="90%" alt="System Architecture">
+</div>
+
+
+## Getting Started
 
 We recommand to use docker for installing and deploying this demonstrative vlbert app.
 
@@ -62,10 +69,15 @@ Docker services:
 
 After deploying, you can visit `http://$YOUR_LOCAL_IP/#/app/Main` for vue frontend interface, and `http://$YOUR_LOCAL_IP:8080` for django backend data api. And if you deploy at a server, then replace `YOUR_LOCAL_IP` with `YOUR_REMOTE_IP`.
 
-Here are my local ip url after deploying this app(You can access it if you are a NPUer):
+I deploy on my local network server, and here are urls after deploying this app and NAT traversa by `Cloudflare Zero-Trust Tunnel`:
 
-- [vue local ip url](http://10.31.164.163/#/app/Main)
-- [django local ip url](http://10.31.164.163:8080)
+- [vue frontend url](https://rec2vqafr.mrxir.cloud/#/app/Main)
+- [django backend url](https://rec2vqabk.mrxir.cloud/)
+
+
+## Demo Video
+
+
 
 ## Project Structure
 
