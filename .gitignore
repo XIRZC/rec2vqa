@@ -4,7 +4,8 @@ resources
 
 django/api/migrations
 django/media/
-django/db.sqlite3
+django/migrations/
+django/db/db.sqlite3
 django/dump.rdb
 
 vlbert/model
