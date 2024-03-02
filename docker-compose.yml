@@ -23,15 +23,31 @@ services:
 
   vue:
     # Build by yourself after changing `./vue/app/Dockerfile`, or use built image on my dockerhub
-    build: "./vue/app/"
     # image: "mrxir/rec2vqa:vue"
+    build: 
+      context: "./vue/app/"
+      args:
+        - NODE_ENV=development
     # Use 80 convenient port for vue app access through local network ip
     ports:
       - "80:8080"
+      - "9229:9229"
+      - "9230:9230"
     volumes:
-      - type: bind
-        source: ./vue/app
-        target: /work
+      - ./vue/app:/opt/node_app/app
+      # bind-mounting these two files in will let you add packages during development without rebuilding
+      # for example, to add bower to your app while developing, just install it inside the container
+      # and then nodemon will restart. Your changes will last until you "docker compose down" and will
+      # be saved on host for next build.
+      # remember to isntall from the parent directory to the code bind-mount:
+      # docker compose exec -w /opt/node_app node npm install --save bower
+      - ./vue/app/package.json:/opt/node_app/package.json
+      - ./vue/app/package-lock.json:/opt/node_app/package-lock.json
+      # this is a workaround to prevent host node_modules from accidently getting mounted in container
+      # in case you want to use node/npm both outside container for test/lint etc. and also inside container
+      # this will overwrite the default node_modules dir in container so it won't conflict with our
+      # /opt/node_app/node_modules location. Thanks to PR from @brnluiz
+      - notused:/opt/node_app/app/node_modules
 
   django:
     # Build by yourself after changing `./django/Dockerfile`, or use built image on my dockerhub
@@ -44,6 +60,10 @@ services:
       - type: bind
         source: ./django
         target: /work
+      - django_db:/work/db
+      - django_migrations:/work/api/migrations
+      - django_media:/work/media
+      - django_static:/work/static
     depends_on:
       - "redis"
 
@@ -86,3 +106,10 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+
+volumes:
+  notused:
+  django_db:
+  django_migrations:
+  django_media:
+  django_static:

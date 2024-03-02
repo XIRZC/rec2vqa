@@ -25,7 +25,7 @@ SECRET_KEY = 'm7@sb2$haxfq07#k)+a-0+-y%pftwua=gy=i#=^ll7cags7xeb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.101.26', '192.168.101.27', '10.68.119.223', 'rec2vqabk.mrxir.cloud', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['192.168.101.27', '10.68.119.223', 'rec2vqabk.mrxir.cloud', '127.0.0.1', 'localhost']
 HOST = 'http://192.168.101.27:8080/'
 
 
@@ -159,7 +159,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [('192.168.101.27', 6379)],
         },
     },
 }
