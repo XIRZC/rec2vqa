@@ -21,7 +21,8 @@ Before utilizing docker to deploy, we need to mannually set frontend vue node mo
 cd ./vue/app
 npm install # ensure node and npm has been installed
 
-cd ../django/
+cd ../../django/
+pip install -r requirements.txt
 python manage.py makemigrations api
 python manage.py migrate
 ```
