@@ -15,6 +15,19 @@ This project aims at combining the two most prevalent vision-langauge tasks, fir
 
 We recommand to use docker for installing and deploying this demonstrative vlbert app.
 
+Before utilizing docker to deploy, we need to mannually set frontend vue node modules and django database migrations:
+
+```shell
+cd ./vue/app
+npm install # ensure node and npm has been installed
+
+cd ../django/
+python manage.py makemigrations api
+python manage.py migrate
+```
+
+The reason you need to run above commands is we hope to mount local `./vue/app` and `./django` directory to corresponding container `/work` directroy, so everytime we make changes on the repository codes, the container can has corresponding changes.
+
 ### Frontend
 
 We use `Vue3+ElementPlus+Typescript` for frontend user interface developing, and use [node docker image](https://hub.docker.com/_/node) to build docker image and deploy this vue app.
