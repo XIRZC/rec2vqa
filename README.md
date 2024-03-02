@@ -222,4 +222,4 @@ https://github.com/XIRZC/rec2vqa/assets/48874620/dc4d8bfc-ecae-4625-975e-84723b5
 
 ## References
 
-This repository is developed based mainly on [VLBERT](https://github.com/jackroos/VL-BERT)(for vlbert pytorch model finetuning and inference) and [MAttNet](https://github.com/lichengunc/MAttNet)(for combining redis, rabbitmq and django to asynchronously request model inference).
+This repository is developed based mainly on [VLBERT](https://github.com/jackroos/VL-BERT)(for vlbert pytorch model finetuning and inference) and [GradCam Demo](https://github.com/Cloud-CV/Grad-CAM) & [MAttNet Demo](https://github.com/lichengunc/MAttNetDemo)(for combining redis, rabbitmq and django to asynchronously request model inference and realtime communication using websockets).
