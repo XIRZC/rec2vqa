@@ -8,14 +8,17 @@ import json
 
 def sender_rec(image_path, referring_expression, socket_id):
 
-  connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+  connection = pika.BlockingConnection(pika.ConnectionParameters(host='myrabbitmq'))
   channel = connection.channel()
   channel.queue_declare(queue='rec_task_queue', durable=True)
+
+  print("======> passed rabbitmq!!!!")
 
   message = {'image_path': image_path, 
              'referring_expression': referring_expression,
              'socket_id': socket_id,
              }
+  print("======> message passed!!!!")
   log_to_terminal(socket_id, {'terminal': 'Sender: publishing a REC job to Queue.'})
   channel.basic_publish(exchange='',
                         routing_key='rec_task_queue',
@@ -30,7 +33,7 @@ def sender_rec(image_path, referring_expression, socket_id):
 
 def sender_vqa(question, rec, socket_id):
 
-  connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+  connection = pika.BlockingConnection(pika.ConnectionParameters(host='myrabbitmq'))
   channel = connection.channel()
   channel.queue_declare(queue='vqa_task_queue', durable=True)
 
@@ -52,7 +55,7 @@ def sender_vqa(question, rec, socket_id):
 
 def sender_det(image_path, referring_expression, socket_id):
 
-  connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+  connection = pika.BlockingConnection(pika.ConnectionParameters(host='myrabbitmq'))
   channel = connection.channel()
   channel.queue_declare(queue='det_task_queue', durable=True)
 

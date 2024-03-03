@@ -227,7 +227,8 @@ def model_forward(image_path, question):
     }
     return output
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='myrabbitmq'))
+print("======> passed rabbitmq!!!!")
 channel = connection.channel()
 
 channel.queue_declare(queue='vqa_task_queue', durable=True)

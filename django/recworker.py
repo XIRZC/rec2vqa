@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from __future__ import print_function
+from pathlib import Path
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 import django
@@ -154,6 +155,7 @@ def model_forward(image_path, referring_expression):
     tic = time.time()
     uniq = uuid.uuid4()
     result_image = str(REC_CONFIG['image_dir'] / (image_path.split('/')[-1][:-4] + '_' + str(uniq) + '.jpg'))
+    Path(result_image).resolve().parent.mkdir(parents=True, exist_ok=True)
     image = Image.open(image_path).convert('RGB')
     ori_image = image.copy()
     w, h = image.width, image.height
@@ -217,7 +219,8 @@ def model_forward(image_path, referring_expression):
     }
     return output
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='myrabbitmq'))
+print("======> passed rabbitmq!!!!")
 channel = connection.channel()
 
 channel.queue_declare(queue='rec_task_queue', durable=True)

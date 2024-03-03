@@ -1,6 +1,6 @@
-const BASE_URL = '192.168.101.27';
+const BASE_URL = 'rec2vqabk.mrxir.cloud';
 
-const BASE_PORT = '8080'
+const BASE_PORT = '443'
 
 // export const WS_ADDRESS = `ws://${BASE_URL}:${BASE_PORT}`;
 // export const WS_ADDRESS = 'ws://region-7.autodl.com:28417/'

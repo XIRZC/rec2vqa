@@ -5,6 +5,7 @@ services:
   rabbitmq:
     # Use built image by official redis
     image: "rabbitmq:3.9.24-alpine"
+    container_name: myrabbitmq
     # redis default port open to 5672 for local network ip address access
     ports:
       - "5672:5672"
@@ -13,13 +14,18 @@ services:
       interval: 15s
       timeout: 10s
       retries: 5
+    networks:
+      - backend
 
   redis:
     # Use built image by official redis
     image: "redis:7.0.5-alpine3.16"
+    container_name: myredis
     # redis default port open to 6379 for local network ip address access
     ports:
       - "6379:6379"
+    networks:
+      - backend
 
   vue:
     # Build by yourself after changing `./vue/app/Dockerfile`, or use built image on my dockerhub
@@ -60,6 +66,8 @@ services:
       - ./django:/work
     depends_on:
       - "redis"
+    networks:
+      - backend
 
   vlbert-recworker:
     # Build by yourself after changing `./vlbert/Dockerfile`, or use built image on my dockerhub
@@ -76,10 +84,12 @@ services:
           devices:
             - capabilities: [gpu]
     # Run vlbert runtime cuda build installation, and then run rec worker program
-    command: bash -c "cd ./django && python recworker.py"
+    command: bash -c "cd ./django && python -u recworker.py"
     depends_on:
       rabbitmq:
         condition: service_healthy
+    networks:
+      - backend
 
   vlbert-vqaworker:
     # Build by yourself after changing `./vlbert/Dockerfile`, or use built image on my dockerhub
@@ -96,10 +106,15 @@ services:
           devices:
             - capabilities: [gpu]
     # Run vlbert runtime cuda build installation, and then run vqa worker program
-    command: bash -c "cd ./django && python vqaworker.py"
+    command: bash -c "cd ./django && python -u vqaworker.py"
     depends_on:
       rabbitmq:
         condition: service_healthy
+    networks:
+      - backend
 
 volumes:
   notused:
+
+networks:
+  backend:
