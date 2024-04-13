@@ -18,7 +18,7 @@ We recommand to use docker for installing and deploying this demonstrative vlber
 Before utilizing docker to deploy, we need to mannually set django database:
 
 ```shell
-cd ../../django/
+cd ./django/
 pip install -r requirements.txt
 python manage.py makemigrations api
 python manage.py migrate
